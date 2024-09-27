@@ -9,11 +9,19 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "file-saver": "^2.0.5",
+    "jszip": "^3.10.1",
+    "mammoth": "^1.8.0",
+    "pptx2json": "^0.0.10",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4"
+    "timers-browserify": "^2.0.12",
+    "web-vitals": "^2.1.4",
+    "xml2js": "^0.6.2",
+    "xmldom": "^0.6.0"
   },
+  "type": "module",
   "build": {
     "appId": "com.example.myapp",
     "productName": "SlideMind",
