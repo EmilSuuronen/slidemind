@@ -1,9 +1,10 @@
-import { app, BrowserWindow, ipcMain } from 'electron';
-import { getTextExtractor } from 'office-text-extractor';
+import {app, BrowserWindow, ipcMain, dialog} from 'electron';
+import {getTextExtractor} from 'office-text-extractor';
 import * as path from "path";
+import {dirname} from "path";
+import {fileURLToPath} from 'url';
+
 let mainWindow;
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -15,17 +16,16 @@ const createWindow = () => {
         webPreferences: {
             preload: path.join(__dirname, 'preload.js'),
             nodeIntegration: false,
-            contextIsolation: true
-        }
+            contextIsolation: true,
+        },
     });
 
     mainWindow.loadURL('http://localhost:3000');
+    mainWindow.webContents.openDevTools();
 };
 
 app.whenReady().then(() => {
     createWindow();
-
-    const extractor = getTextExtractor();
 
     ipcMain.handle('extract-text', async (event, filePath) => {
         try {
@@ -34,12 +34,23 @@ app.whenReady().then(() => {
             }
             const extractor = getTextExtractor();
             // Use the path as input to extract text
-            const text = await extractor.extractText({ input: filePath, type: 'file' });
-
-            return text;
+            return await extractor.extractText({input: filePath, type: 'file'});
         } catch (error) {
             console.error('Error extracting text:', error);
             throw error;
+        }
+    });
+
+    ipcMain.handle('dialog:openFile', async () => {
+        const { canceled, filePaths } = await dialog.showOpenDialog({
+            properties: ['openFile'],
+            filters: [{ name: 'PowerPoint Files', extensions: ['pptx'] }]
+        });
+
+        if (canceled) {
+            return null;
+        } else {
+            return filePaths[0]; // Return the selected file path
         }
     });
 
