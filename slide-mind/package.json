@@ -4,7 +4,7 @@
   "private": true,
   "electron": "electron .",
   "dist": "electron-builder",
-  "main": "electron-main.js",
+  "main": "src/electron-main.js",
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
@@ -12,6 +12,7 @@
     "file-saver": "^2.0.5",
     "jszip": "^3.10.1",
     "mammoth": "^1.8.0",
+    "office-text-extractor": "^3.0.3",
     "pptx2json": "^0.0.10",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

@@ -1,16 +1,27 @@
 import React, { useState } from 'react';
-const { ipcRenderer } = window.require('electron');
+
 
 function HomeMain() {
+    const [selectedFile, setSelectedFile] = useState(null);
     const [extractedText, setExtractedText] = useState('');
 
-    const handleFileUpload = async (event) => {
-        const file = event.target.files[0];
-        if (file) {
+    const handleFileChange = (event) => {
+        setSelectedFile(event.target.files[0]);
+    };
+
+    const handleExtractText = async () => {
+        if (selectedFile) {
             try {
-                const filePath = file.path;  // Use the file's path in Electron's context
-                const text = await ipcRenderer.invoke('extract-pptx-text', filePath);
+                const filePath = selectedFile.path; // This should give you the correct file path in Electron
+
+                if (!filePath) {
+                    console.error('File path is undefined!');
+                    return;
+                }
+
+                const text = await window.electronAPI.extractText(filePath); // Invoke Electron API
                 setExtractedText(text);
+                console.log(text)
             } catch (error) {
                 console.error('Error extracting text:', error);
             }
@@ -19,11 +30,16 @@ function HomeMain() {
 
     return (
         <div>
-            <input type="file" accept=".pptx" onChange={handleFileUpload} />
-            <div>
-                <h3>Extracted Text:</h3>
-                <pre>{extractedText}</pre>
-            </div>
+            <h1>PowerPoint Text Extractor</h1>
+            <input type="file" accept=".pptx" onChange={handleFileChange} />
+            <button onClick={handleExtractText}>Extract Text</button>
+
+            {extractedText && (
+                <div>
+                    <h2>Extracted Text:</h2>
+                    <p>{extractedText}</p>
+                </div>
+            )}
         </div>
     );
 };
