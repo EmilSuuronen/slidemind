@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import './home-main-styles.css';
+import Sidebar from "../sidebar/sidebar.js";
 
 
 function HomeMain() {
@@ -11,40 +13,33 @@ function HomeMain() {
         if (selectedFilePath) {
             console.log('Selected file path:', selectedFilePath);
             setSelectedFile(selectedFilePath);
+
+            try {
+                // Automatically extract the text after file selection
+                const text = await window.electronAPI.extractText(selectedFilePath); // Extract text from the file
+                setExtractedText(text); // Update the state with extracted text
+            } catch (error) {
+                console.error('Error extracting text:', error);
+            }
         } else {
             console.error('File selection was canceled or failed.');
         }
     };
 
-    const handleExtractText = async () => {
-        if (selectedFile) {
-            try {
-                // Extract the file path from the selected file
-                console.log('Selected file:', selectedFile)
-                const filePath = selectedFile;
-
-                if (!filePath) {
-                    console.error('File path is undefined');
-                    return;
-                }
-                const text = await window.electronAPI.extractText(filePath); // Invoke Electron API
-                setExtractedText(text);
-            } catch (error) {
-                console.error('Error extracting text:', error);
-            }
-        }
-    };
-
     return (
-        <div>
-            <h1>PowerPoint Text Extractor</h1>
-            <input type="file" accept=".pptx" onChange={handleFileChange} />
-            <button onClick={handleExtractText}>Extract Text</button>
+        <div className="div-home-main">
+            <Sidebar/>
+            <h1>SlideMind</h1>
+            <button onClick={handleFileChange}>Select PowerPoint File</button>
 
             {extractedText && (
                 <div>
                     <h2>Extracted Text:</h2>
-                    <p>{extractedText}</p>
+                    {extractedText ? (
+                        <p>{extractedText}</p>
+                    ) : (
+                        <p style={{ fontStyle: 'italic' }}>No file selected yet</p>
+                    )}
                 </div>
             )}
         </div>
