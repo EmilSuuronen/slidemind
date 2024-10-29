@@ -88,6 +88,15 @@ app.whenReady().then(() => {
         }
     });
 
+    ipcMain.handle('dialog:openFile', async () => {
+        const { canceled, filePaths } = await dialog.showOpenDialog({
+            properties: ['openFile', 'multiSelections'], // Allow multiple file selection
+            filters: [{ name: 'PowerPoint Files', extensions: ['pptx'] }],
+        });
+
+        return canceled ? null : filePaths;
+    });
+
     ipcMain.handle('load-file-content', async (event, filePath) => {
         try {
             const fileContent = fs.readFileSync(filePath); // Read file content as binary

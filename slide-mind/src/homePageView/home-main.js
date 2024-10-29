@@ -9,6 +9,7 @@ import fileData from "../localData.json";
 
 function HomeMain() {
     const [selectedFilePath, setSelectedFilePath] = useState(null);
+    const [selectedFileName, setSelectedFileName] = useState(null);
     const [extractedText, setExtractedText] = useState('');
     const [keywords, setKeywords] = useState([]);
     const [links, setLinks] = useState([]);
@@ -22,10 +23,12 @@ function HomeMain() {
         setExtractedText(fileData.description);
         setKeywords(fileData.keywords);
         setLinks(fileData.links || []);
+        setFilteredFileData(fileData);
     };
 
     const handleFileSelect = (file) => {
         setSelectedFilePath(file.filePath);
+        setSelectedFileName(file.fileName);
         setExtractedText(file.description);
         setKeywords(file.keywords);
         setLinks(file.links || []);
@@ -58,7 +61,7 @@ function HomeMain() {
 
                 <SelectFileButton onFileProcessed={handleFileProcessed} />
 
-                <FileDetails file={{ description: extractedText, keywords, links, selectedFilePath }} />
+                <FileDetails file={{ selectedFileName, description: extractedText, keywords, links, selectedFilePath }} />
             </div>
         </div>
     );

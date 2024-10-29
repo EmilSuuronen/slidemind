@@ -14,11 +14,10 @@ function FileDetails({ file }) {
         : null;
     const docs = formattedFilePath ? [{ uri: formattedFilePath }] : [];
 
-    console.log("Formatted File Path:", docs);
-
     return (
         <div>
-            <h2>Description</h2>
+            <h2>{file.selectedFileName}</h2>
+            <h3>Description</h3>
             <p>{file.description || <i>No description available</i>}</p>
 
             {file.keywords && file.keywords.length > 0 ? (
