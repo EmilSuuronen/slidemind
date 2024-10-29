@@ -1,5 +1,6 @@
 import React from 'react';
-import { callOpenAiAPI } from '../openAI/apiConnection.js';
+import { callOpenAiAPI } from '../../api/apiConnection.js';
+
 
 function SelectFileButton({ onFileProcessed }) {
     const handleFileChange = async () => {
@@ -45,7 +46,7 @@ function SelectFileButton({ onFileProcessed }) {
 
     return (
         <button onClick={handleFileChange} className="button-select-file">
-            Select PowerPoint File
+            Add files
         </button>
     );
 }
