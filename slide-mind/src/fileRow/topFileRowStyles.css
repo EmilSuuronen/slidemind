@@ -1,0 +1,11 @@
+.topFileRow {
+    width: 100%;
+    height: 100px;
+    background: #6b6b6b;
+    display: flex;
+}
+
+.fileRowItem {
+    margin: 12px;
+    background: #494747;
+}
