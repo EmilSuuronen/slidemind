@@ -1,9 +1,8 @@
 // src/fileRow/TopFileRow.js
 import React from "react";
 import "./topFileRowStyles.css";
-import fileData from "../../localData.json";
 
-function TopFileRow({ onFileSelect, selectedFilePath }) {
+function TopFileRow({ onFileSelect, selectedFilePath, fileData }) {
     const truncateFileName = (fileName = "", maxLength = 20) => {
         return fileName.length > maxLength ? fileName.slice(0, maxLength) + "..." : fileName;
     };

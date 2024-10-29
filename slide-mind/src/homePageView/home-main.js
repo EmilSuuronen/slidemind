@@ -1,16 +1,21 @@
 // src/components/HomeMain.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './home-main-styles.css';
 import Sidebar from "../components/sidebar/sidebar.js";
 import TopFileRow from "../components/fileRow/TopFileRow.js";
 import SelectFileButton from "../components/fileSelectButton/FileSelectButton.js";
 import FileDetails from "../fileDetailsView/fileDetailsView.js";
+import fileData from "../localData.json";
 
 function HomeMain() {
     const [selectedFilePath, setSelectedFilePath] = useState(null);
     const [extractedText, setExtractedText] = useState('');
     const [keywords, setKeywords] = useState([]);
     const [links, setLinks] = useState([]);
+    const [filteredFileData, setFilteredFileData] = useState(fileData);
+
+    // Gather unique keywords from file data
+    const uniqueKeywords = [...new Set(fileData.flatMap(file => file.keywords))];
 
     const handleFileProcessed = (fileData) => {
         setSelectedFilePath(fileData.filePath);
@@ -26,11 +31,30 @@ function HomeMain() {
         setLinks(file.links || []);
     };
 
+    const handleSearch = (query) => {
+        const lowerQuery = query.toLowerCase();
+        const filteredData = fileData.filter(file =>
+            file.fileName.toLowerCase().includes(lowerQuery) ||
+            file.description.toLowerCase().includes(lowerQuery) ||
+            file.keywords.some(keyword => keyword.toLowerCase().includes(lowerQuery))
+        );
+        setFilteredFileData(filteredData);
+    };
+
+    const handleKeywordSelect = (keyword) => {
+        const filteredData = fileData.filter(file => file.keywords.includes(keyword));
+        setFilteredFileData(filteredData);
+    };
+
     return (
         <div className="div-home-main">
-            <Sidebar />
+            <Sidebar onSearch={handleSearch} onKeywordSelect={handleKeywordSelect} keywords={uniqueKeywords} />
             <div className="div-home-main-column">
-                <TopFileRow onFileSelect={handleFileSelect} selectedFilePath={selectedFilePath} />
+                <TopFileRow
+                    onFileSelect={handleFileSelect}
+                    selectedFilePath={selectedFilePath}
+                    fileData={filteredFileData}
+                />
 
                 <SelectFileButton onFileProcessed={handleFileProcessed} />
 
