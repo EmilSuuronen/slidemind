@@ -26,17 +26,6 @@ const loadFromLocalStorage = () => {
     return [];
 };
 
-// Save new data to local storage
-const saveToLocalStorage = (data) => {
-    try {
-        const existingData = loadFromLocalStorage();
-        existingData.push(data);
-        fs.writeFileSync(localDataPath, JSON.stringify(existingData, null, 2));
-        console.log('Data saved to local storage');
-    } catch (error) {
-        console.error('Error saving to local storage:', error);
-    }
-};
 
 // Electron window creation
 const createWindow = () => {
@@ -47,6 +36,7 @@ const createWindow = () => {
             preload: path.join(__dirname, 'preload.js'),
             nodeIntegration: false,
             contextIsolation: true,
+            webSecurity: false,
         },
     });
 
@@ -98,13 +88,14 @@ app.whenReady().then(() => {
         }
     });
 
-    ipcMain.handle('dialog:openFile', async () => {
-        const { canceled, filePaths } = await dialog.showOpenDialog({
-            properties: ['openFile'],
-            filters: [{ name: 'PowerPoint Files', extensions: ['pptx'] }],
-        });
-
-        return canceled ? null : filePaths[0];
+    ipcMain.handle('load-file-content', async (event, filePath) => {
+        try {
+            const fileContent = fs.readFileSync(filePath); // Read file content as binary
+            return { success: true, data: fileContent.toString('base64') }; // Send data as base64 to renderer
+        } catch (error) {
+            console.error('Error reading file:', error);
+            return { success: false, error: error.message };
+        }
     });
 
     app.on('activate', () => {

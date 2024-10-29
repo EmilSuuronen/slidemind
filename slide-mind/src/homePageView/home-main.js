@@ -58,7 +58,7 @@ function HomeMain() {
 
                 <SelectFileButton onFileProcessed={handleFileProcessed} />
 
-                <FileDetails file={{ description: extractedText, keywords, links }} />
+                <FileDetails file={{ description: extractedText, keywords, links, selectedFilePath }} />
             </div>
         </div>
     );
