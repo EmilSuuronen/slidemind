@@ -1,8 +1,9 @@
+// src/components/HomeMain.js
 import React, { useState } from 'react';
 import Sidebar from '../sidebar/sidebar.js';
 import './home-main-styles.css';
-import { callOpenAiAPI } from '../openAI/apiConnection.js';
 import Keyword from '../keyword/keyword.js';
+import SelectFileButton from '../components/FileSelectButton.js';
 import TopFileRow from "../fileRow/TopFileRow.js";
 
 function HomeMain() {
@@ -11,43 +12,12 @@ function HomeMain() {
     const [keywords, setKeywords] = useState([]);
     const [links, setLinks] = useState([]);
 
-    const handleFileChange = async () => {
-        const selectedFilePath = await window.electronAPI.openFileDialog();
-        if (selectedFilePath) {
-            const fileExists = await window.electronAPI.checkFileExists(selectedFilePath);
-            if (fileExists) {
-                console.log('File already exists in storage, skipping addition.');
-                return;
-            }
-
-            setSelectedFile(selectedFilePath);
-
-            try {
-                // Extract text content
-                const { filePath, fileName, textContent } = await window.electronAPI.extractText(selectedFilePath);
-
-                // Generate AI response
-                const formattedResponse = await callOpenAiAPI(textContent);
-                setExtractedText(formattedResponse.description);
-                setKeywords(formattedResponse.keywords);
-                setLinks(formattedResponse.links);
-
-                // Save only the final object with full data to local storage
-                const newFileObject = {
-                    filePath,
-                    fileName,
-                    textContent,
-                    keywords: formattedResponse.keywords,
-                    description: formattedResponse.description,
-                };
-                await window.electronAPI.saveNewFile(newFileObject);
-
-            } catch (error) {
-                console.error('Error extracting text or saving file:', error);
-            }
-        } else {
-            console.error('File selection was canceled or failed.');
-        }
+    // Callback function to handle the processed file data
+    const handleFileProcessed = (fileData) => {
+        setSelectedFile(fileData.filePath);
+        setExtractedText(fileData.description);
+        setKeywords(fileData.keywords);
+        setLinks(fileData.links || []); // Default to empty array if no links
     };
 
     return (
@@ -56,9 +26,9 @@ function HomeMain() {
             <div className="div-home-main-column">
                 <TopFileRow/>
                 <h1>SlideMind</h1>
-                <button onClick={handleFileChange} className="button-select-file">
-                    Select PowerPoint File
-                </button>
+
+                {/* Render the SelectFileButton component and pass the callback */}
+                <SelectFileButton onFileProcessed={handleFileProcessed} />
 
                 {extractedText && (
                     <div>
