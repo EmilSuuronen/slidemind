@@ -14,6 +14,12 @@ function FileDetails({ file }) {
         : null;
     const docs = formattedFilePath ? [{ uri: formattedFilePath }] : [];
 
+    const handleOpenFile = () => {
+        if (file.selectedFilePath) {
+            window.electronAPI.openFile(file.selectedFilePath);
+        }
+    };
+
     return (
         <div>
             <h2>{file.selectedFileName}</h2>
@@ -47,6 +53,10 @@ function FileDetails({ file }) {
                     />
                 </div>
             )}
+
+            <button onClick={handleOpenFile} className="open-file-button">
+                Open File
+            </button>
         </div>
     );
 }

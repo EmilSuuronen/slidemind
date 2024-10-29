@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain, dialog } from 'electron';
+import { app, BrowserWindow, ipcMain, dialog, shell } from 'electron';
 import { getTextExtractor } from 'office-text-extractor';
 import * as path from 'path';
 import { dirname } from 'path';
@@ -103,6 +103,16 @@ app.whenReady().then(() => {
             return { success: true, data: fileContent.toString('base64') }; // Send data as base64 to renderer
         } catch (error) {
             console.error('Error reading file:', error);
+            return { success: false, error: error.message };
+        }
+    });
+
+    ipcMain.handle('open-file', async (event, filePath) => {
+        try {
+            await shell.openPath(filePath);
+            return { success: true };
+        } catch (error) {
+            console.error('Error opening file:', error);
             return { success: false, error: error.message };
         }
     });
