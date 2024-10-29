@@ -3,6 +3,7 @@ import Sidebar from '../sidebar/sidebar.js';
 import './home-main-styles.css';
 import { callOpenAiAPI } from '../openAI/apiConnection.js';
 import Keyword from '../keyword/keyword.js';
+import TopFileRow from "../fileRow/TopFileRow.js";
 
 function HomeMain() {
     const [selectedFile, setSelectedFile] = useState(null);
@@ -22,20 +23,25 @@ function HomeMain() {
             setSelectedFile(selectedFilePath);
 
             try {
-                const text = await window.electronAPI.extractText(selectedFilePath);
-                const formattedResponse = await callOpenAiAPI(text);
+                // Extract text content
+                const { filePath, fileName, textContent } = await window.electronAPI.extractText(selectedFilePath);
+
+                // Generate AI response
+                const formattedResponse = await callOpenAiAPI(textContent);
                 setExtractedText(formattedResponse.description);
                 setKeywords(formattedResponse.keywords);
                 setLinks(formattedResponse.links);
 
+                // Save only the final object with full data to local storage
                 const newFileObject = {
-                    filePath: selectedFilePath,
-                    fileName: selectedFilePath.split('/').pop(),
-                    textContent: text,
+                    filePath,
+                    fileName,
+                    textContent,
                     keywords: formattedResponse.keywords,
                     description: formattedResponse.description,
                 };
                 await window.electronAPI.saveNewFile(newFileObject);
+
             } catch (error) {
                 console.error('Error extracting text or saving file:', error);
             }
@@ -48,6 +54,7 @@ function HomeMain() {
         <div className="div-home-main">
             <Sidebar />
             <div className="div-home-main-column">
+                <TopFileRow/>
                 <h1>SlideMind</h1>
                 <button onClick={handleFileChange} className="button-select-file">
                     Select PowerPoint File

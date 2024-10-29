@@ -87,11 +87,11 @@ app.whenReady().then(() => {
 
             const fileName = path.basename(filePath);
             const extractor = getTextExtractor();
+
+            // Extract text content from PowerPoint
             const textContent = await extractor.extractText({ input: filePath, type: 'file' });
 
-            const pptObject = { filePath, fileName, textContent, keywords: [], description: '' };
-            saveToLocalStorage(pptObject);
-            return textContent;
+            return { filePath, fileName, textContent }; // Return all necessary fields
         } catch (error) {
             console.error('Error extracting text:', error);
             throw error;
