@@ -4,6 +4,7 @@ import * as path from 'path';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import * as fs from 'fs';
+import officeParser from 'officeparser';
 
 let mainWindow;
 
@@ -126,6 +127,22 @@ app.whenReady().then(() => {
             return { success: false, error: error.message };
         }
     });
+
+    // IPC handler to parse PowerPoint content
+    ipcMain.handle('parse-pptx', async (event, filePath) => {
+        try {
+            const config = {
+                newlineDelimiter: "\n",
+                ignoreNotes: false,
+            };
+            const data = await officeParser.parseOfficeAsync(filePath, config);
+            return { success: true, data };
+        } catch (error) {
+            console.error('Error parsing PowerPoint file:', error);
+            return { success: false, error: error.message };
+        }
+    });
+
 
     app.on('activate', () => {
         if (BrowserWindow.getAllWindows().length === 0) createWindow();

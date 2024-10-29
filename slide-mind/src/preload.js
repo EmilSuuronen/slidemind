@@ -10,4 +10,5 @@ contextBridge.exposeInMainWorld('electronAPI', {
     saveNewFile: (fileObject) => ipcRenderer.invoke('save-new-file', fileObject),
     openFile: (filePath) => ipcRenderer.invoke('open-file', filePath),
     showFileLocation: (filePath) => ipcRenderer.invoke('show-file-location', filePath),
+    parsePptx: (filePath) => ipcRenderer.invoke('parse-pptx', filePath),
 });
