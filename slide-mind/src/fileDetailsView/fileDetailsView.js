@@ -20,6 +20,12 @@ function FileDetails({ file }) {
         }
     };
 
+    const handleShowFileLocation = () => {
+        if (file.selectedFilePath) {
+            window.electronAPI.showFileLocation(file.selectedFilePath);
+        }
+    };
+
     return (
         <div>
             <h2>{file.selectedFileName}</h2>
@@ -56,6 +62,10 @@ function FileDetails({ file }) {
 
             <button onClick={handleOpenFile} className="open-file-button">
                 Open File
+            </button>
+
+            <button onClick={handleShowFileLocation} className="show-file-location-button">
+                Show File Location
             </button>
         </div>
     );

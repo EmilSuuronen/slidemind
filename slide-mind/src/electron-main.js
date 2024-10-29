@@ -117,6 +117,16 @@ app.whenReady().then(() => {
         }
     });
 
+    ipcMain.handle('show-file-location', async (event, filePath) => {
+        try {
+            shell.showItemInFolder(filePath);
+            return { success: true };
+        } catch (error) {
+            console.error('Error showing file location:', error);
+            return { success: false, error: error.message };
+        }
+    });
+
     app.on('activate', () => {
         if (BrowserWindow.getAllWindows().length === 0) createWindow();
     });

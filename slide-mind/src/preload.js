@@ -9,4 +9,5 @@ contextBridge.exposeInMainWorld('electronAPI', {
     checkFileExists: (filePath) => ipcRenderer.invoke('check-file-exists', filePath),
     saveNewFile: (fileObject) => ipcRenderer.invoke('save-new-file', fileObject),
     openFile: (filePath) => ipcRenderer.invoke('open-file', filePath),
+    showFileLocation: (filePath) => ipcRenderer.invoke('show-file-location', filePath),
 });
