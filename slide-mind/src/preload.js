@@ -3,6 +3,7 @@ const { contextBridge, ipcRenderer, shell } = require('electron');
 console.log('preload.js loaded');
 
 contextBridge.exposeInMainWorld('electronAPI', {
+    convertPptxToPdf: (pptxPath) => ipcRenderer.invoke('convert-pptx-to-pdf', pptxPath),
     extractText: (filePath) => ipcRenderer.invoke('extract-text', filePath),
     openFileDialog: () => ipcRenderer.invoke('dialog:openFile'),
     loadFileData: (fileName) => ipcRenderer.invoke('load-file-data', fileName),
@@ -10,5 +11,4 @@ contextBridge.exposeInMainWorld('electronAPI', {
     saveNewFile: (fileObject) => ipcRenderer.invoke('save-new-file', fileObject),
     openFile: (filePath) => ipcRenderer.invoke('open-file', filePath),
     showFileLocation: (filePath) => ipcRenderer.invoke('show-file-location', filePath),
-    loadPptxAsBase64: (filePath) => ipcRenderer.invoke('load-pptx-as-base64', filePath),
 });

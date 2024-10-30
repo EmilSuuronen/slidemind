@@ -1,9 +1,12 @@
-import { app, BrowserWindow, ipcMain, dialog, shell } from 'electron';
-import { getTextExtractor } from 'office-text-extractor';
+import {app, BrowserWindow, dialog, ipcMain, shell} from 'electron';
+import {getTextExtractor} from 'office-text-extractor';
 import * as path from 'path';
-import { dirname } from 'path';
-import { fileURLToPath } from 'url';
+import {dirname} from 'path';
+import {fileURLToPath} from 'url';
 import * as fs from 'fs';
+import * as http from "http";
+import express from "express";
+import { exec } from 'child_process';
 
 let mainWindow;
 
@@ -11,6 +14,12 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const localDataPath = path.join(__dirname, 'localData.json');
+
+const appExpress = express();
+const server = http.createServer(appExpress);
+
+appExpress.use('/tempfiles', express.static(path.join(__dirname, 'tempfiles')));
+console.log("serving files at location: ", path.join(__dirname, 'tempfiles'));
 
 // Load existing data safely from local storage
 const loadFromLocalStorage = () => {
@@ -47,6 +56,10 @@ const createWindow = () => {
 // Handle app lifecycle
 app.whenReady().then(() => {
     createWindow();
+
+    server.listen(3001, () => {
+        console.log('Local file server running on http://localhost:3001');
+    });
 
     ipcMain.handle('check-file-exists', (event, filePath) => {
         const existingData = loadFromLocalStorage();
@@ -127,14 +140,22 @@ app.whenReady().then(() => {
         }
     });
 
-    ipcMain.handle('load-pptx-as-base64', async (event, filePath) => {
-        try {
-            const fileContent = fs.readFileSync(filePath);
-            return { success: true, data: `data:application/vnd.openxmlformats-officedocument.presentationml.presentation;base64,${fileContent.toString('base64')}` };
-        } catch (error) {
-            console.error('Error loading file:', error);
-            return { success: false, error: error.message };
-        }
+    ipcMain.handle('convert-pptx-to-pdf', async (event, pptxPath) => {
+        const outputDir = path.join(__dirname, 'tempfiles');
+        const scriptPath = path.join(__dirname, '/script/pptx_converter.ps1');
+        console.log("outputdir: ", outputDir);
+
+        return new Promise((resolve, reject) => {
+            exec(`powershell -ExecutionPolicy Bypass -File "${scriptPath}" -pptxPath "${pptxPath}" -outputDir "${outputDir}"`, (error, stdout, stderr) => {
+                if (error) {
+                    console.error(`Conversion error: ${stderr}`);
+                    reject({ success: false, error: stderr });
+                } else {
+                    const pdfPath = stdout.trim();
+                    resolve({ success: true, pdfPath });
+                }
+            });
+        });
     });
 
     app.on('activate', () => {
