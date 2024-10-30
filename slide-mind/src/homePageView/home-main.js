@@ -14,6 +14,7 @@ function HomeMain() {
     const [keywords, setKeywords] = useState([]);
     const [links, setLinks] = useState([]);
     const [filteredFileData, setFilteredFileData] = useState(fileData);
+    const [filePdfPath, setFilePdfPath] = useState(null);
 
     // Gather unique keywords from file data
     const uniqueKeywords = [...new Set(fileData.flatMap(file => file.keywords))];
@@ -31,7 +32,9 @@ function HomeMain() {
         setSelectedFileName(file.fileName);
         setExtractedText(file.description);
         setKeywords(file.keywords);
-        setLinks(file.links || []);
+        setLinks(file.links);
+        setFilePdfPath(file.pdfPath);
+        console.log("file pdf path", file.pdfPath);
     };
 
     const handleSearch = (query) => {
@@ -61,7 +64,7 @@ function HomeMain() {
 
                 <SelectFileButton onFileProcessed={handleFileProcessed} />
 
-                <FileDetails file={{ selectedFileName, description: extractedText, keywords, links, selectedFilePath }} />
+                <FileDetails file={{ selectedFileName, description: extractedText, keywords, links, selectedFilePath, filePdfPath }} />
             </div>
         </div>
     );

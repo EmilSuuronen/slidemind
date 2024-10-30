@@ -1,20 +1,11 @@
 // src/components/FileDetails.js
-import React, {useEffect, useState} from 'react';
+import React, { useState } from 'react';
 import Keyword from '../components/keyword/keyword.js';
 
 function FileDetails({ file }) {
-
-    const [pdfPath, setPdfPath] = useState(null);
-
     if (!file) {
         return <p style={{ fontStyle: 'italic' }}>No file selected yet</p>;
     }
-
-    // Prepare docs array with properly formatted `selectedFilePath`
-    const formattedFilePath = file.selectedFilePath
-        ? `file://${encodeURI(file.selectedFilePath.replace(/\\/g, '/'))}`
-        : null;
-    console.log('filepath:', file.selectedFilePath);
 
     const handleOpenFile = () => {
         if (file.selectedFilePath) {
@@ -28,18 +19,9 @@ function FileDetails({ file }) {
         }
     };
 
-    const handleConvertToPdf = async () => {
-        try {
-            const result = await window.electronAPI.convertPptxToPdf(file.selectedFilePath);
-            if (result.success) {
-                setPdfPath(result.pdfPath);
-            } else {
-                console.error(result.error);
-            }
-        } catch (error) {
-            console.error('Conversion error:', error);
-        }
-    };
+    console.log("file ", file);
+
+    console.log("pdf path: ", file.filePdfPath);
 
     return (
         <div>
@@ -67,10 +49,8 @@ function FileDetails({ file }) {
                 Show File Location
             </button>
 
-            <button onClick={handleConvertToPdf}>Convert to PDF</button>
-
-            {pdfPath && (
-                <iframe src={`file://${pdfPath}`} width="100%" height="500px" />
+            {file.filePdfPath && (
+                <iframe src={`file://${file.filePdfPath}`} width="100%" height="500px" />
             )}
         </div>
     );
