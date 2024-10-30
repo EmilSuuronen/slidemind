@@ -1,14 +1,10 @@
+// src/fileRow/TopFileRow.js
 import React from "react";
 import "./topFileRowStyles.css";
-import fileData from "../localData.json";
 
-function TopFileRow() {
-
+function TopFileRow({ onFileSelect, selectedFilePath, fileData }) {
     const truncateFileName = (fileName = "", maxLength = 20) => {
-        if (fileName && typeof fileName === "string" && fileName.length > maxLength) {
-            return fileName.slice(0, maxLength) + "...";
-        }
-        return fileName;
+        return fileName.length > maxLength ? fileName.slice(0, maxLength) + "..." : fileName;
     };
 
     return (
@@ -17,7 +13,11 @@ function TopFileRow() {
                 <i>No files</i>
             ) : (
                 fileData.map((file, index) => (
-                    <div key={index} className="fileRowItem">
+                    <div
+                        key={index}
+                        className={`fileRowItem ${file.filePath === selectedFilePath ? "selected" : ""}`}
+                        onClick={() => onFileSelect(file)}
+                    >
                         <span className="fileName">{truncateFileName(file.fileName)}</span>
                     </div>
                 ))

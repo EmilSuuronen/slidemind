@@ -4,8 +4,6 @@ function Keyword(keywords) {
 
     const inputtedKeywords = keywords.keywords;
 
-    console.log("inputtedKeywords: ", inputtedKeywords);
-    console.log("keywords: ", keywords)
     return (
         <div style={{display: 'flex', flexWrap: 'wrap', gap: '10px'}}>
             {inputtedKeywords.map((inputtedKeywords, index) => (

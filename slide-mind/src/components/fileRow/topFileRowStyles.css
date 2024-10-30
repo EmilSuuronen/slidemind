@@ -1,0 +1,27 @@
+/* src/fileRow/topFileRowStyles.css */
+.topFileRow {
+    display: flex;
+    flex-direction: row;
+    background: #5b5b5b;
+}
+
+.fileRowItem {
+    padding: 8px;
+    margin: 12px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    height: 40px;
+    background-color: #727272;
+}
+
+.fileRowItem.selected {
+    border: 2px solid #007bff;
+    background-color: #727272;
+    font-weight: bold;
+}
+
+.fileRowItem:hover {
+    margin: 12px;
+    background: #9b9b9b;
+}
