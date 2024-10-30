@@ -4,24 +4,6 @@ import Keyword from '../components/keyword/keyword.js';
 import DocViewer, { DocViewerRenderers } from 'react-doc-viewer';
 
 function FileDetails({ file }) {
-    const [fileContent, setFileContent] = useState(null);
-
-    useEffect(() => {
-        const loadFileContent = async () => {
-            if (file.selectedFilePath && file.selectedFilePath.endsWith('.pptx')) {
-                const result = await window.electronAPI.parsePptx(file.selectedFilePath);
-                if (result.success) {
-                    setFileContent(result.data);
-                } else {
-                    console.error('Error:', result.error);
-                }
-            } else {
-                setFileContent(null);
-            }
-        };
-
-        loadFileContent();
-    }, [file.selectedFilePath]);
 
     if (!file) {
         return <p style={{ fontStyle: 'italic' }}>No file selected yet</p>;
@@ -29,10 +11,10 @@ function FileDetails({ file }) {
 
     // Prepare docs array with properly formatted `selectedFilePath`
     const formattedFilePath = file.selectedFilePath
-        ? `file://${file.selectedFilePath.replace(/\\/g, '/')}`
+        ? `file://${encodeURI(file.selectedFilePath.replace(/\\/g, '/'))}`
         : null;
     console.log('formattedFilePath:', formattedFilePath)
-    const docs = formattedFilePath ? [{ uri: formattedFilePath }] : [];
+    const docs = formattedFilePath ? [{ uri: formattedFilePath, fileType: 'pptx' }] : [];
 
     const handleOpenFile = () => {
         if (file.selectedFilePath) {
@@ -83,10 +65,6 @@ function FileDetails({ file }) {
             <button onClick={handleOpenFile} className="open-file-button">
                 Open File
             </button>
-
-            {/* Display the parsed PowerPoint text */}
-            <h3>Content</h3>
-            <p>{fileContent || <i>Loading content...</i>}</p>
 
             <button onClick={handleShowFileLocation} className="show-file-location-button">
                 Show File Location

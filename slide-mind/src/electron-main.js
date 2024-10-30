@@ -4,7 +4,6 @@ import * as path from 'path';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import * as fs from 'fs';
-import officeParser from 'officeparser';
 
 let mainWindow;
 
@@ -128,21 +127,15 @@ app.whenReady().then(() => {
         }
     });
 
-    // IPC handler to parse PowerPoint content
-    ipcMain.handle('parse-pptx', async (event, filePath) => {
+    ipcMain.handle('load-pptx-as-base64', async (event, filePath) => {
         try {
-            const config = {
-                newlineDelimiter: "\n",
-                ignoreNotes: false,
-            };
-            const data = await officeParser.parseOfficeAsync(filePath, config);
-            return { success: true, data };
+            const fileContent = fs.readFileSync(filePath);
+            return { success: true, data: `data:application/vnd.openxmlformats-officedocument.presentationml.presentation;base64,${fileContent.toString('base64')}` };
         } catch (error) {
-            console.error('Error parsing PowerPoint file:', error);
+            console.error('Error loading file:', error);
             return { success: false, error: error.message };
         }
     });
-
 
     app.on('activate', () => {
         if (BrowserWindow.getAllWindows().length === 0) createWindow();

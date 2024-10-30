@@ -22,7 +22,7 @@ function HomeMain() {
         setSelectedFilePath(fileData.filePath);
         setExtractedText(fileData.description);
         setKeywords(fileData.keywords);
-        setLinks(fileData.links || []);
+        setLinks(fileData.links);
         setFilteredFileData(fileData);
     };
 
