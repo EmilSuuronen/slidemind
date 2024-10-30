@@ -34,7 +34,6 @@ function HomeMain() {
         setKeywords(file.keywords);
         setLinks(file.links);
         setFilePdfPath(file.pdfPath);
-        console.log("file pdf path", file.pdfPath);
     };
 
     const handleSearch = (query) => {
@@ -45,6 +44,7 @@ function HomeMain() {
             file.keywords.some(keyword => keyword.toLowerCase().includes(lowerQuery))
         );
         setFilteredFileData(filteredData);
+        console.log("filtered data", filteredData)
     };
 
     const handleKeywordSelect = (keyword) => {

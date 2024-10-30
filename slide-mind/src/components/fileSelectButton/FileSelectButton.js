@@ -14,7 +14,6 @@ function SelectFileButton({ onFileProcessed }) {
             try {
                 const fileExists = await window.electronAPI.checkFileExists(selectedFilePath);
                 if (fileExists) {
-                    console.log(`File ${selectedFilePath} already exists in storage, skipping addition.`);
                     continue;
                 }
 

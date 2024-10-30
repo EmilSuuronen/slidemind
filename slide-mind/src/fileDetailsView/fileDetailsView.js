@@ -19,10 +19,6 @@ function FileDetails({ file }) {
         }
     };
 
-    console.log("file ", file);
-
-    console.log("pdf path: ", file.filePdfPath);
-
     return (
         <div>
             <h2>{file.selectedFileName}</h2>
