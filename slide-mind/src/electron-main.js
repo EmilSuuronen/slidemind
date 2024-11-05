@@ -140,19 +140,22 @@ app.whenReady().then(() => {
         }
     });
 
+
     ipcMain.handle('convert-pptx-to-pdf', async (event, pptxPath) => {
         const outputDir = path.join(__dirname, 'tempfiles');
         const scriptPath = path.join(__dirname, '/script/pptx_converter.ps1');
 
         return new Promise((resolve, reject) => {
-            exec(`powershell -ExecutionPolicy Bypass -File "${scriptPath}" -pptxPath "${pptxPath}" -outputDir "${outputDir}"`, (error, stdout, stderr) => {
+            exec(
+                `powershell -ExecutionPolicy Bypass -File "${scriptPath}" -pptxPath "${pptxPath}" -outputDir "${outputDir}"`,
+                (error, stdout, stderr) => {
                 if (error) {
                     console.error(`Conversion error: ${stderr}`);
-                    reject({ success: false, error: stderr });
+                    reject({success: false, error: stderr});
                 } else {
                     const pdfFileName = path.basename(pptxPath, '.pptx') + '.pdf';
                     const pdfPath = path.join(outputDir, pdfFileName);
-                    resolve({ success: true, pdfPath });
+                    resolve({success: true, pdfPath});
                 }
             });
         });

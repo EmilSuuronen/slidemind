@@ -1,0 +1,22 @@
+.fileDetailsView-main-container {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    justify-content: space-evenly;
+}
+
+.file-detail-info-column {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    height: 100%;
+}
+
+.pdf-document-container {
+    overflow: scroll;
+
+}
+
+.pdf-document {
+
+}

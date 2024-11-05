@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import './home-main-styles.css';
-import Sidebar from '../components/sidebar/sidebar.js';
-import TopFileRow from '../components/fileRow/TopFileRow.js';
-import SelectFileButton from '../components/fileSelectButton/FileSelectButton.js';
+import Sidebar from '../../components/sidebar/sidebar.js';
+import TopFileRow from '../../components/fileRow/TopFileRow.js';
+import SelectFileButton from '../../components/fileSelectButton/FileSelectButton.js';
 import FileDetails from '../fileDetailsView/fileDetailsView.js';
-import fileData from '../localData.json';
+import fileData from '../../localData.json';
 
 function HomeMain() {
     const [selectedFilePath, setSelectedFilePath] = useState(null);
