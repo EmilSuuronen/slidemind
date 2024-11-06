@@ -35,6 +35,7 @@ function Sidebar({ onSearch, onKeywordSelect, keywords }) {
             <h1>Slide Mind</h1>
             <div className="sidebar__menu">
                 <input
+                    className="search-input-field"
                     title="search"
                     placeholder="Search by name, description, or keyword"
                     value={searchQuery}
@@ -42,6 +43,7 @@ function Sidebar({ onSearch, onKeywordSelect, keywords }) {
                 />
                 <div className="keyword-dropdown">
                     <input
+                        className="keyword-input-field"
                         type="text"
                         placeholder="Filter by keyword"
                         value={keywordQuery}

@@ -10,7 +10,6 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@4.4.168/build/pdf.
 
 function FileDetails({ file }) {
     const [numPages, setNumPages] = useState(null);
-    const [pageNumber] = useState(1);
 
     if (!file) {
         return <p style={{ fontStyle: 'italic' }}>No file selected yet</p>;
@@ -45,37 +44,42 @@ function FileDetails({ file }) {
                     <p style={{ fontStyle: 'italic' }}>No keywords to display</p>
                 )}
 
+                <h3>Sources</h3>
+
                 {file.links && file.links.length > 0 ? (
                     <Keyword keywords={file.links} />
                 ) : (
                     <p style={{ fontStyle: 'italic' }}>No sources in material</p>
                 )}
-
-                <button onClick={handleOpenFile} className="open-file-button">
-                    Open File
-                </button>
-
-                <button onClick={handleShowFileLocation} className="show-file-location-button">
-                    Show File Location
-                </button>
-
             </div>
 
             {file.filePdfPath && (
                 <div className="pdf-document-container">
+                    <div className="pdf-view-buttons-container">
+                        <b>Preview</b>
+                        <button onClick={handleOpenFile} className="open-file-button">
+                            Open File
+                        </button>
+
+                        <button onClick={handleShowFileLocation} className="show-file-location-button">
+                            Open Location
+                        </button>
+                    </div>
+
                     <Document
                         file={`file://${file.filePdfPath}`}
                         onLoadSuccess={onDocumentLoadSuccess}
                         className="pdf-document"
-
                     >
                         {Array.from(
                             new Array(numPages),
                             (el, index) => (
                                 <Page
+                                    className="pdf-document-page"
                                     key={`page_${index + 1}`}
                                     pageNumber={index + 1}
-                                    width="400"
+                                    width="450"
+
                                 />
                             )
                         )}

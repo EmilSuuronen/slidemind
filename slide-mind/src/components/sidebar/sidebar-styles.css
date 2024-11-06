@@ -1,15 +1,26 @@
 .div-sidebar-main {
-    height: 100vh;
+    display: flex;
     background-color: #383838;
     color: white;
     padding: 12px;
-    position: fixed;
-    top: 0;
-    left: -170px;
+    align-items: center;
+    justify-items: center;
+    flex-direction: column;
 }
 
-.div-sidebar-main:hover {
-    left: 0px;
-    transition: left 0.5s ease-in-out;
+.search-input-field {
+    padding: 8px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    background-color: #5b5b5b;
+    color: white;
+    margin: 0 0 12px 0;
 }
 
+.keyword-input-field {
+    padding: 8px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    background-color: #5b5b5b;
+    color: white;
+}

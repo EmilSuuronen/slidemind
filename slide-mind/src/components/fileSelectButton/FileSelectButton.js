@@ -12,6 +12,7 @@ function SelectFileButton({ onFileProcessed }) {
 
         for (const selectedFilePath of selectedFilePaths) {
             try {
+                console.log('Processing file:', selectedFilePath);
                 const fileExists = await window.electronAPI.checkFileExists(selectedFilePath);
                 if (fileExists) {
                     continue;
@@ -34,6 +35,7 @@ function SelectFileButton({ onFileProcessed }) {
                     textContent,
                     keywords: formattedResponse.keywords,
                     description: formattedResponse.description,
+                    sources: formattedResponse.sources,
                     pdfPath, // Include PDF path
                 };
 
