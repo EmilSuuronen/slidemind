@@ -1,15 +1,15 @@
 // src/components/Sidebar.js
 import * as PropTypes from "prop-types";
 import './sidebar-styles.css';
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 
 function SidebarItem(props) {
     return null;
 }
 
-SidebarItem.propTypes = { title: PropTypes.string };
+SidebarItem.propTypes = {title: PropTypes.string};
 
-function Sidebar({ onSearch, onKeywordSelect, keywords }) {
+function Sidebar({onSearch, onKeywordSelect, keywords}) {
     const [searchQuery, setSearchQuery] = useState('');
     const [keywordQuery, setKeywordQuery] = useState('');
 
@@ -37,13 +37,13 @@ function Sidebar({ onSearch, onKeywordSelect, keywords }) {
                 <input
                     className="search-input-field"
                     title="search"
-                    placeholder="Search by name, description, or keyword"
+                    placeholder="Search"
                     value={searchQuery}
                     onChange={handleSearchChange}
                 />
                 <div className="keyword-dropdown">
                     <input
-                        className="keyword-input-field"
+                        className="search-input-field"
                         type="text"
                         placeholder="Filter by keyword"
                         value={keywordQuery}
@@ -52,7 +52,7 @@ function Sidebar({ onSearch, onKeywordSelect, keywords }) {
                     />
                     <datalist id="keyword-options">
                         {filteredKeywords.map((keyword, index) => (
-                            <option key={index} value={keyword} />
+                            <option key={index} value={keyword}/>
                         ))}
                     </datalist>
                 </div>

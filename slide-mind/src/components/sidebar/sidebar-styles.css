@@ -1,31 +1,27 @@
 .div-sidebar-main {
     display: flex;
+    flex-direction: column;
     background-color: #383838;
     color: white;
     align-items: center;
     justify-items: center;
-    padding: 8px
+    width: 100%;
+    max-width: 280px;
 }
 
 .search-input-field {
-    padding: 8px;
     border: 1px solid transparent;
     border-radius: 4px;
     background-color: #5b5b5b;
     color: white;
     margin: 0 0 12px 0;
     width: 100%;
+    padding: 8px;
 }
 
 .sidebar-menu {
-    width: 100%;
+    position: sticky;
+    top: 30px;
+    left: 0;
 }
 
-.keyword-input-field {
-    padding: 8px;
-    border: 1px solid transparent;
-    border-radius: 4px;
-    background-color: #5b5b5b;
-    color: white;
-    width: 100%;
-}

@@ -4,6 +4,8 @@ import {Document, Page, pdfjs} from "react-pdf/dist/esm/index.js";
 import React, {useState} from 'react';
 import {IoIosArrowDropdown, IoIosArrowDropup} from "react-icons/io";
 import slideFileData from '../../localData.json';
+import Sidebar from "../sidebar/sidebar.js";
+import fileData from "../../localData.json";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@4.4.168/build/pdf.worker.min.mjs`;
 
@@ -41,13 +43,15 @@ function TopFileRow({onFileSelect, selectedFilePath, fileData, searchQuery}) {
                 }));
         }
         // If no search query, return the entire file as a single item
-        return [{ ...file, slideNumber: 1 }];
+        return [{...file, slideNumber: 1}];
     });
+
+
 
     return (
         <div className="top-file-row-main-container">
             <div className="topFileRow" id={"topRowExpanded" + isTopRowExpanded.toString()}>
-                <h3 className="top-file-row-file-container-title">files</h3>
+                <h3 className="top-file-row-file-container-title">Documents</h3>
                 <div className="top-file-row-file-container">
                     {fileData.length === 0 ? (
                         <i>No files</i>
@@ -76,7 +80,6 @@ function TopFileRow({onFileSelect, selectedFilePath, fileData, searchQuery}) {
 
                 <h3 className="top-file-row-file-container-title">Slides</h3>
                 <div className="top-file-row-file-container">
-
                     {matchingSlidesData.length === 0 ? (
                         <i>No files</i>
                     ) : (
@@ -86,19 +89,19 @@ function TopFileRow({onFileSelect, selectedFilePath, fileData, searchQuery}) {
                                 className={`fileRowItem ${file.filePath === selectedFilePath ? "selected" : ""}`}
                                 onClick={() => onFileSelect(file)}
                             >
-                                <div className="file-details">
-                                    <Document
-                                        file={`file://${file.pdfPath}`}
-                                        className="pdf-document"
-                                    >
-                                        <Page
-                                            className="pdf-document-page-top-row"
-                                            pageNumber={file.slideNumber} // Display only the matched slide's page
-                                            width={100}
-                                        />
-                                    </Document>
-                                    <span className="fileName">{truncateFileName(file.fileName)} - Slide {file.slideNumber}</span>
-                                </div>
+
+                                <Document
+                                    file={`file://${file.pdfPath}`}
+                                    className="pdf-document"
+                                >
+                                    <Page
+                                        className="pdf-document-page-top-row"
+                                        pageNumber={file.slideNumber} // Display only the matched slide's page
+                                        width={100}
+                                    />
+                                </Document>
+                                <span
+                                    className="fileName">{truncateFileName(file.fileName)} - <div className="div-page-number">Page {file.slideNumber}</div></span>
                             </div>
                         ))
                     )}
