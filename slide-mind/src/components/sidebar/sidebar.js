@@ -33,7 +33,7 @@ function Sidebar({ onSearch, onKeywordSelect, keywords }) {
     return (
         <div className="div-sidebar-main">
             <h1>Slide Mind</h1>
-            <div className="sidebar__menu">
+            <div className="sidebar-menu">
                 <input
                     className="search-input-field"
                     title="search"

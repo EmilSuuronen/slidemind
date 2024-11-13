@@ -94,7 +94,14 @@ app.whenReady().then(() => {
             // Extract text content from PowerPoint
             const textContent = await extractor.extractText({ input: filePath, type: 'file' });
 
-            return { filePath, fileName, textContent }; // Return all necessary fields
+            // Split textContent into individual slides
+            const slides = textContent.split(/---+/).map((slideContent, index) => ({
+                slideNumber: index + 1,
+                textContent: slideContent.trim()
+            }));
+
+            // Return all necessary fields including slides array
+            return { filePath, fileName, textContent, slides };
         } catch (error) {
             console.error('Error extracting text:', error);
             throw error;

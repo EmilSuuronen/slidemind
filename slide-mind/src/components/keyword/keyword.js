@@ -1,4 +1,5 @@
 import React from 'react';
+import './keyword-styles.css';
 
 function Keyword(keywords) {
 
@@ -9,15 +10,7 @@ function Keyword(keywords) {
             {inputtedKeywords.map((inputtedKeywords, index) => (
                 <span
                     key={index}
-                    style={{
-                        padding: '10px 15px',
-                        backgroundColor: '#5c5cff',
-                        borderRadius: '20px',
-                        fontSize: '14px',
-                        fontWeight: 'bold',
-                        color: '#333',
-                        margin: '5px 0'
-                    }}
+                    className="keyword-span"
                 >{inputtedKeywords}</span>
             ))}
         </div>

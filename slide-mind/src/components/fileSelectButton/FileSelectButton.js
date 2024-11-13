@@ -19,7 +19,7 @@ function SelectFileButton({ onFileProcessed }) {
                 }
 
                 // Extract text content
-                const { filePath, fileName, textContent } = await window.electronAPI.extractText(selectedFilePath);
+                const { filePath, fileName, textContent, slides } = await window.electronAPI.extractText(selectedFilePath);
 
                 // Generate AI response
                 const formattedResponse = await callOpenAiAPI(textContent);
@@ -36,7 +36,8 @@ function SelectFileButton({ onFileProcessed }) {
                     keywords: formattedResponse.keywords,
                     description: formattedResponse.description,
                     sources: formattedResponse.sources,
-                    pdfPath, // Include PDF path
+                    pdfPath,
+                    slides
                 };
 
                 // Save the file data to JSON

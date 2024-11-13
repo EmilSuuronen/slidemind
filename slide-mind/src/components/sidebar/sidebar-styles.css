@@ -2,10 +2,9 @@
     display: flex;
     background-color: #383838;
     color: white;
-    padding: 12px;
     align-items: center;
     justify-items: center;
-    flex-direction: column;
+    padding: 8px
 }
 
 .search-input-field {
@@ -15,6 +14,11 @@
     background-color: #5b5b5b;
     color: white;
     margin: 0 0 12px 0;
+    width: 100%;
+}
+
+.sidebar-menu {
+    width: 100%;
 }
 
 .keyword-input-field {
@@ -23,4 +27,5 @@
     border-radius: 4px;
     background-color: #5b5b5b;
     color: white;
+    width: 100%;
 }

@@ -15,6 +15,7 @@ function HomeMain() {
     const [filteredFileData, setFilteredFileData] = useState([]);
     const [isSearching, setIsSearching] = useState(false); // Track search state
     const [filePdfPath, setFilePdfPath] = useState(null);
+    const [searchQuery, setSearchQuery] = useState('');
 
     // Gather unique keywords from file data
     const uniqueKeywords = [...new Set(fileData.flatMap(file => file.keywords))];
@@ -49,8 +50,8 @@ function HomeMain() {
             file.keywords.some(keyword => keyword.toLowerCase().includes(lowerQuery))
         );
         setFilteredFileData(filteredData);
+        setSearchQuery(query);
         setIsSearching(true); // Indicate a search is active
-        console.log("filtered data", filteredData);
     };
 
     const handleKeywordSelect = (keyword) => {
@@ -67,6 +68,7 @@ function HomeMain() {
                     onFileSelect={handleFileSelect}
                     selectedFilePath={selectedFilePath}
                     fileData={isSearching ? filteredFileData : fileData} // Use filtered data only when searching
+                    searchQuery={searchQuery}
                 />
 
                 <SelectFileButton onFileProcessed={handleFileProcessed} />

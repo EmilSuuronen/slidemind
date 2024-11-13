@@ -1,26 +1,50 @@
 /* src/fileRow/topFileRowStyles.css */
+.top-file-row-main-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 .topFileRow {
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap; /* Allows items to wrap to the next row */
-    background: #5b5b5b;
+    flex-direction: column;
     width: 100%;
-    z-index: 100;
-    max-height: 150px;
+    background: #5b5b5b;
     overflow-y: scroll;
+}
+
+#topRowExpandedtrue {
+    transition: height 0.2s ease-in-out;
+    height: 650px;
+}
+
+#topRowExpandedfalse {
+    transition: height 0.2s ease-in-out;
+    height: 225px;
+}
+
+.top-file-row-file-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 100%;
+}
+
+.top-file-row-file-container-title {
+    width: 100%;
 }
 
 .fileRowItem {
     flex: auto;
     max-width: calc(100% / 6);
     min-width: 200px;
-    padding: 12px;
+    height: 120px;
     margin: 12px;
     cursor: pointer;
     border: 1px solid transparent;
     border-radius: 4px;
     background-color: #727272;
-    /* Center content */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -44,4 +68,24 @@
 
 .fileRowItem:hover {
     background: #9b9b9b;
+}
+
+.extend-top-row {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background: rgba(49, 49, 49, 0.57);
+    position: sticky;
+    width: 100%;
+    padding: 4px;
+    z-index: 100;
+    color: white;
+    height: 30px;
+    bottom: 0;
+    box-shadow: #333333 0px 0px 5px 0px;
+}
+
+.extend-top-row:hover {
+    background: rgba(75, 75, 75, 0.57);
+    cursor: pointer;
 }
