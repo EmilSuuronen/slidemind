@@ -2,9 +2,10 @@
 .top-file-row-main-container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
     width: 100%;
+
 }
 .topFileRow {
     display: flex;
@@ -15,13 +16,13 @@
 }
 
 #topRowExpandedtrue {
-    transition: height 0.2s ease-in-out;
+    transition: height 0.3s ease-in-out;
     height: 100%;
 }
 
 #topRowExpandedfalse {
-    transition: height 0.2s ease-in-out;
-    height: 225px;
+    transition: height 0.3s ease-in-out;
+    height: 280px;
 }
 
 .top-file-row-file-container {

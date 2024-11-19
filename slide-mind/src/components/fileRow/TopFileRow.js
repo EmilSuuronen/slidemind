@@ -4,8 +4,6 @@ import {Document, Page, pdfjs} from "react-pdf/dist/esm/index.js";
 import React, {useState} from 'react';
 import {IoIosArrowDropdown, IoIosArrowDropup} from "react-icons/io";
 import slideFileData from '../../localData.json';
-import Sidebar from "../sidebar/sidebar.js";
-import fileData from "../../localData.json";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@4.4.168/build/pdf.worker.min.mjs`;
 
@@ -16,7 +14,6 @@ function TopFileRow({onFileSelect, selectedFilePath, fileData, searchQuery}) {
     const truncateFileName = (fileName = "", maxLength = 20) => {
         return fileName.length > maxLength ? fileName.slice(0, maxLength) + "..." : fileName;
     };
-
 
     function handleTopRowExpandedClick() {
         if (isTopRowExpanded) {
@@ -46,8 +43,6 @@ function TopFileRow({onFileSelect, selectedFilePath, fileData, searchQuery}) {
         return [{...file, slideNumber: 1}];
     });
 
-
-
     return (
         <div className="top-file-row-main-container">
             <div className="topFileRow" id={"topRowExpanded" + isTopRowExpanded.toString()}>
@@ -60,7 +55,7 @@ function TopFileRow({onFileSelect, selectedFilePath, fileData, searchQuery}) {
                             <div
                                 key={index}
                                 className={`fileRowItem ${file.filePath === selectedFilePath ? "selected" : ""}`}
-                                onClick={() => onFileSelect(file)}
+                                onClick={() => onFileSelect(file, false)}
                             >
                                 <Document
                                     file={`file://${file.pdfPath}`}
@@ -87,7 +82,7 @@ function TopFileRow({onFileSelect, selectedFilePath, fileData, searchQuery}) {
                             <div
                                 key={index}
                                 className={`fileRowItem ${file.filePath === selectedFilePath ? "selected" : ""}`}
-                                onClick={() => onFileSelect(file)}
+                                onClick={() => onFileSelect(file, true)}
                             >
 
                                 <Document

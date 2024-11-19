@@ -18,15 +18,24 @@ function SelectFileButton({ onFileProcessed }) {
                     continue;
                 }
 
+                const isPdf = selectedFilePath.toLowerCase().endsWith('.pdf');
+
                 // Extract text content
                 const { filePath, fileName, textContent, slides } = await window.electronAPI.extractText(selectedFilePath);
 
                 // Generate AI response
                 const formattedResponse = await callOpenAiAPI(textContent);
 
+                let pdfPath = null;
+
                 // Convert PPTX to PDF
-                const pdfResult = await window.electronAPI.convertPptxToPdf(selectedFilePath);
-                const pdfPath = pdfResult.success ? pdfResult.pdfPath : null;
+                if (!isPdf) {
+                    const pdfResult = await window.electronAPI.convertPptxToPdf(selectedFilePath);
+                    pdfPath = pdfResult.success ? pdfResult.pdfPath : null;
+                } else {
+                    console.log('File is already a PDF. Skipping conversion.');
+                    pdfPath = filePath; // Use the original PDF path
+                }
 
                 // Construct the final file object with pdfPath
                 const newFileObject = {

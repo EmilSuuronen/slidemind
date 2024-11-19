@@ -34,6 +34,8 @@ function Sidebar({onSearch, onKeywordSelect, keywords}) {
         <div className="div-sidebar-main">
             <h1>Slide Mind</h1>
             <div className="sidebar-menu">
+                <hr className="solid"/>
+                <b> Search </b>
                 <input
                     className="search-input-field"
                     title="search"
@@ -41,6 +43,8 @@ function Sidebar({onSearch, onKeywordSelect, keywords}) {
                     value={searchQuery}
                     onChange={handleSearchChange}
                 />
+                <hr className="solid"/>
+                <b> Keywords </b>
                 <div className="keyword-dropdown">
                     <input
                         className="search-input-field"

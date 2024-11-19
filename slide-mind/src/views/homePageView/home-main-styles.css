@@ -8,7 +8,6 @@
 .div-home-main-column {
     display: flex;
     flex-direction: column;
-    justify-content: start;
     width: 100%;
 }
 

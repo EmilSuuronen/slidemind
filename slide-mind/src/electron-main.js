@@ -111,7 +111,7 @@ app.whenReady().then(() => {
     ipcMain.handle('dialog:openFile', async () => {
         const { canceled, filePaths } = await dialog.showOpenDialog({
             properties: ['openFile', 'multiSelections'], // Allow multiple file selection
-            filters: [{ name: 'PowerPoint Files', extensions: ['pptx'] }],
+            filters: [{ name: 'PowerPoint Files', extensions: ['pptx', 'pdf'] }],
         });
 
         return canceled ? null : filePaths;

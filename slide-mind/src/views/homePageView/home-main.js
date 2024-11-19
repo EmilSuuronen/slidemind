@@ -33,13 +33,23 @@ function HomeMain() {
         setFilePdfPath(newFile.pdfPath);
     };
 
-    const handleFileSelect = (file) => {
-        setSelectedFilePath(file.filePath);
-        setSelectedFileName(file.fileName);
-        setExtractedText(file.description);
-        setKeywords(file.keywords);
-        setLinks(file.links);
-        setFilePdfPath(file.pdfPath);
+    const handleFileSelect = (file, isSinglePage) => {
+        console.log("isSinglePage: ", isSinglePage);
+        if (isSinglePage){
+            setSelectedFilePath(file.filePath);
+            setSelectedFileName(file.fileName);
+            setExtractedText(file.description);
+            setKeywords(file.keywords);
+            setLinks(file.links);
+            setFilePdfPath(file.pdfPath);
+        } else {
+            setSelectedFilePath(file.filePath);
+            setSelectedFileName(file.fileName);
+            setExtractedText(file.description);
+            setKeywords(file.keywords);
+            setLinks(file.links);
+            setFilePdfPath(file.pdfPath);
+        }
     };
 
     const handleSearch = (query) => {
@@ -48,6 +58,7 @@ function HomeMain() {
             file.fileName.toLowerCase().includes(lowerQuery) ||
             file.description.toLowerCase().includes(lowerQuery) ||
             file.keywords.some(keyword => keyword.toLowerCase().includes(lowerQuery))
+
         );
         setFilteredFileData(filteredData);
         setSearchQuery(query);
