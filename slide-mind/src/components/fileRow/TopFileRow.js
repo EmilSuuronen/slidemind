@@ -84,7 +84,6 @@ function TopFileRow({onFileSelect, selectedFilePath, fileData, searchQuery}) {
                                 className={`fileRowItem ${file.filePath === selectedFilePath ? "selected" : ""}`}
                                 onClick={() => onFileSelect(file, true)}
                             >
-
                                 <Document
                                     file={`file://${file.pdfPath}`}
                                     className="pdf-document"

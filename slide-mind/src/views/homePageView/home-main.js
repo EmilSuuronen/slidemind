@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useCallback, useState} from 'react';
 import './home-main-styles.css';
 import Sidebar from '../../components/sidebar/sidebar.js';
 import TopFileRow from '../../components/fileRow/TopFileRow.js';
@@ -16,6 +16,7 @@ function HomeMain() {
     const [isSearching, setIsSearching] = useState(false); // Track search state
     const [filePdfPath, setFilePdfPath] = useState(null);
     const [searchQuery, setSearchQuery] = useState('');
+    const [loading, setLoading] = useState(false);
 
     // Gather unique keywords from file data
     const uniqueKeywords = [...new Set(fileData.flatMap(file => file.keywords))];
@@ -34,9 +35,10 @@ function HomeMain() {
     };
 
     const handleFileSelect = (file, isSinglePage) => {
-        console.log("isSinglePage: ", isSinglePage);
         if (isSinglePage){
+            console.log("file.filepath:", file.filePath);
             setSelectedFilePath(file.filePath);
+            console.log("selectedFilePath:", selectedFilePath);
             setSelectedFileName(file.fileName);
             setExtractedText(file.description);
             setKeywords(file.keywords);
@@ -52,29 +54,53 @@ function HomeMain() {
         }
     };
 
-    const handleSearch = (query) => {
-        const lowerQuery = query.toLowerCase();
-        const filteredData = fileData.filter(file =>
-            file.fileName.toLowerCase().includes(lowerQuery) ||
-            file.description.toLowerCase().includes(lowerQuery) ||
-            file.keywords.some(keyword => keyword.toLowerCase().includes(lowerQuery))
+    function debounce(func, delay) {
+        let timer;
+        return (...args) => {
+            clearTimeout(timer);
+            timer = setTimeout(() => func(...args), delay);
+        };
+    }
 
-        );
-        setFilteredFileData(filteredData);
+    const handleSearch = useCallback(
+        debounce((query) => {
+            setLoading(true);
+            const lowerQuery = query.toLowerCase();
+            const filteredData = fileData.filter(
+                (file) =>
+                    file.fileName.toLowerCase().includes(lowerQuery) ||
+                    file.description.toLowerCase().includes(lowerQuery) ||
+                    file.keywords.some((keyword) => keyword.toLowerCase().includes(lowerQuery))
+            );
+            setFilteredFileData(filteredData);
+            setIsSearching(true);
+            setLoading(false);
+        }, 300), // 300ms debounce delay
+        []
+    );
+
+    const handleKeywordSelect = useCallback(
+        debounce((keyword) => {
+            setLoading(true);
+            const filteredData = fileData.filter((file) => file.keywords.includes(keyword));
+            setFilteredFileData(filteredData);
+            setIsSearching(true);
+            setLoading(false);
+        }, 300),
+        []
+    );
+
+    const handleInputChange = (event) => {
+        const query = event.target.value;
         setSearchQuery(query);
-        setIsSearching(true); // Indicate a search is active
-    };
-
-    const handleKeywordSelect = (keyword) => {
-        const filteredData = fileData.filter(file => file.keywords.includes(keyword));
-        setFilteredFileData(filteredData);
-        setIsSearching(true); // Indicate a search is active
+        handleSearch(query); // Call the debounced search
     };
 
     return (
         <div className="div-home-main">
             <Sidebar onSearch={handleSearch} onKeywordSelect={handleKeywordSelect} keywords={uniqueKeywords} />
             <div className="div-home-main-column">
+                {loading && <div className="loading-spinner">Loading...</div>}
                 <TopFileRow
                     onFileSelect={handleFileSelect}
                     selectedFilePath={selectedFilePath}
