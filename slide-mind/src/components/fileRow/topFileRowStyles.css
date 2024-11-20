@@ -100,3 +100,8 @@
     border-radius: 12px;
     width: 50%;
 }
+
+.highlight {
+    background-color: yellow;
+    color: red;
+}

@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useRef, useState} from 'react';
 import './home-main-styles.css';
 import Sidebar from '../../components/sidebar/sidebar.js';
 import TopFileRow from '../../components/fileRow/TopFileRow.js';
@@ -19,6 +19,7 @@ function HomeMain() {
     const [currentSearchQuery, setCurrentSearchQuery] = useState(''); // Current search query
     const [isSelectedSinglePage, setIsSelectedSinglePage] = useState(false); // Check if the selected file is a single page
     const [selectedPageNumber, setSelectedPageNumber] = useState(null); // Selected page number
+    const previousSelectedIndexRef = useRef(null);
 
     // Gather unique keywords from the file data
     const uniqueKeywords = [...new Set(fileData.flatMap((file) => file.keywords))];
@@ -37,7 +38,25 @@ function HomeMain() {
     };
 
     // Handles when a file is selected
-    const handleFileSelect = (file, isSinglePage, pageNumber) => {
+    const handleFileSelect = (file, isSinglePage, pageNumber, index) => {
+
+
+        if (previousSelectedIndexRef.current !== null) {
+            const previousItem = document.getElementById(`singleFileRowItem${previousSelectedIndexRef.current}`);
+            if (previousItem) {
+                previousItem.style.border = ''; // Remove the border
+            }
+        }
+
+        // Set border for the current item
+        const currentItem = document.getElementById(`singleFileRowItem${index}`);
+        if (currentItem) {
+            currentItem.style.border = '2px solid red';
+        }
+
+        // Update the previous selected index
+        previousSelectedIndexRef.current = index;
+
         if (isSinglePage) {
             setIsSelectedSinglePage(true);
             setSelectedPageNumber(pageNumber);
@@ -113,7 +132,8 @@ function HomeMain() {
                             links,
                             selectedFilePath,
                             filePdfPath,
-                            selectedPageNumber
+                            selectedPageNumber,
+                            currentSearchQuery
                         }}
                     />
                 ) : (

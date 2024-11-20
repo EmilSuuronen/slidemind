@@ -82,8 +82,9 @@ function TopFileRow({onFileSelect, selectedFilePath, fileData, searchQuery}) {
                         matchingSlidesData.map((file, index) => (
                             <div
                                 key={index}
-                                className={`fileRowItem ${file.filePath === selectedFilePath ? "selected" : ""}`}
-                                onClick={() => onFileSelect(file, true, file.slideNumber)}
+                                className={`fileRowItem`}
+                                id={`singleFileRowItem${index}`}
+                                onClick={() => onFileSelect(file, true, file.slideNumber, index)}
                             >
                                 <Document
                                     file={`file://${file.pdfPath}`}

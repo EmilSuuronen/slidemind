@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Document, Page, pdfjs } from 'react-pdf';
+import React, {useEffect, useRef, useState} from 'react';
+import {Document, Page, pdfjs} from 'react-pdf';
 import Keyword from '../../components/keyword/keyword.js';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
@@ -8,13 +8,11 @@ import './fileDetailsViewStyles.css';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@4.4.168/build/pdf.worker.min.mjs`;
 
-function FileDetails({ file }, { pageNumber }) {
+function FileDetails({file}) {
     const [numPages, setNumPages] = useState(null);
 
-    console.log("filepagenumber", file.selectedPageNumber);
-
     if (!file) {
-        return <p style={{ fontStyle: 'italic' }}>No file selected yet</p>;
+        return <p style={{fontStyle: 'italic'}}>No file selected yet</p>;
     }
 
     const handleOpenFile = () => {
@@ -29,7 +27,7 @@ function FileDetails({ file }, { pageNumber }) {
         }
     };
 
-    const onDocumentLoadSuccess = ({ numPages }) => {
+    const onDocumentLoadSuccess = ({numPages}) => {
         setNumPages(numPages);
     };
 
@@ -41,17 +39,17 @@ function FileDetails({ file }, { pageNumber }) {
                 <p>{file.description || <i>No description available</i>}</p>
 
                 {file.keywords && file.keywords.length > 0 ? (
-                    <Keyword keywords={file.keywords} />
+                    <Keyword keywords={file.keywords}/>
                 ) : (
-                    <p style={{ fontStyle: 'italic' }}>No keywords to display</p>
+                    <p style={{fontStyle: 'italic'}}>No keywords to display</p>
                 )}
 
                 <h3>Sources</h3>
 
                 {file.links && file.links.length > 0 ? (
-                    <Keyword keywords={file.links} />
+                    <Keyword keywords={file.links}/>
                 ) : (
-                    <p style={{ fontStyle: 'italic' }}>No sources in material</p>
+                    <p style={{fontStyle: 'italic'}}>No sources in material</p>
                 )}
             </div>
 
@@ -69,19 +67,26 @@ function FileDetails({ file }, { pageNumber }) {
                     </div>
 
                     {file.selectedPageNumber ? (
-                        <Document
-                            file={`file://${file.filePdfPath}`}
-                            onLoadSuccess={onDocumentLoadSuccess}
-                            className="pdf-document"
-                        >
-                            <Page
-                                className="pdf-document-page"
-                                key={`page_${file.selectedPageNumber}`}
-                                pageNumber={file.selectedPageNumber}
-                                width="450"
-                            />
-                        </Document>
-                    ) :(
+                        <div>
+                            <div className="pdf-view-buttons-container">
+                                <b>{file.selectedFileName}</b>
+                                <span>page: {file.selectedPageNumber}</span>
+                            </div>
+                            <Document
+                                file={`file://${file.filePdfPath}`}
+                                onLoadSuccess={onDocumentLoadSuccess}
+                                className="pdf-document"
+                            >
+                                <Page
+                                    className="pdf-document-page"
+                                    key={`page_${file.selectedPageNumber}`}
+                                    pageNumber={file.selectedPageNumber}
+                                    width="450"
+                                    renderTextLayer={true}
+                                />
+                            </Document>
+                        </div>
+                    ) : (
                         <Document
                             file={`file://${file.filePdfPath}`}
                             onLoadSuccess={onDocumentLoadSuccess}
