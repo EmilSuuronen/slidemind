@@ -13,20 +13,22 @@ function HomeMain() {
     const [keywords, setKeywords] = useState([]);
     const [links, setLinks] = useState([]);
     const [filteredFileData, setFilteredFileData] = useState([]);
-    const [isSearching, setIsSearching] = useState(false); // Track search state
+    const [isSearching, setIsSearching] = useState(false);
     const [filePdfPath, setFilePdfPath] = useState(null);
-    const [searchQuery, setSearchQuery] = useState('');
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(false); // Loading state for searches
+    const [currentSearchQuery, setCurrentSearchQuery] = useState(''); // Current search query
+    const [isSelectedSinglePage, setIsSelectedSinglePage] = useState(false); // Check if the selected file is a single page
+    const [selectedPageNumber, setSelectedPageNumber] = useState(null); // Selected page number
 
-    // Gather unique keywords from file data
-    const uniqueKeywords = [...new Set(fileData.flatMap(file => file.keywords))];
+    // Gather unique keywords from the file data
+    const uniqueKeywords = [...new Set(fileData.flatMap((file) => file.keywords))];
 
+    // Handles when a new file is processed
     const handleFileProcessed = (newFile) => {
-        // Refresh original fileData and reset any search filtering
-        fileData.push(newFile); // Update the original data source
-        setFilteredFileData([]); // Clear the search filter to use full data
-        setIsSearching(false); // Reset search state
-        setSelectedFilePath(newFile.filePath); // Set selected file
+        fileData.push(newFile);
+        setFilteredFileData([]);
+        setIsSearching(false);
+        setSelectedFilePath(newFile.filePath);
         setSelectedFileName(newFile.fileName);
         setExtractedText(newFile.description);
         setKeywords(newFile.keywords);
@@ -34,83 +36,99 @@ function HomeMain() {
         setFilePdfPath(newFile.pdfPath);
     };
 
-    const handleFileSelect = (file, isSinglePage) => {
-        if (isSinglePage){
-            console.log("file.filepath:", file.filePath);
-            setSelectedFilePath(file.filePath);
-            console.log("selectedFilePath:", selectedFilePath);
-            setSelectedFileName(file.fileName);
-            setExtractedText(file.description);
-            setKeywords(file.keywords);
-            setLinks(file.links);
-            setFilePdfPath(file.pdfPath);
+    // Handles when a file is selected
+    const handleFileSelect = (file, isSinglePage, pageNumber) => {
+        if (isSinglePage) {
+            setIsSelectedSinglePage(true);
+            setSelectedPageNumber(pageNumber);
         } else {
-            setSelectedFilePath(file.filePath);
-            setSelectedFileName(file.fileName);
-            setExtractedText(file.description);
-            setKeywords(file.keywords);
-            setLinks(file.links);
-            setFilePdfPath(file.pdfPath);
+            setIsSelectedSinglePage(false);
+            setSelectedPageNumber(null);
         }
+        setSelectedFilePath(file.filePath);
+        setSelectedFileName(file.fileName);
+        setExtractedText(file.description);
+        setKeywords(file.keywords);
+        setLinks(file.links);
+        setFilePdfPath(file.pdfPath);
     };
 
-    function debounce(func, delay) {
-        let timer;
-        return (...args) => {
-            clearTimeout(timer);
-            timer = setTimeout(() => func(...args), delay);
-        };
-    }
+    // Handles search input from the Sidebar
+    const handleSearch = (query) => {
+        setLoading(true); // Start loading animation
+        const lowerQuery = query.toLowerCase();
+        const filteredData = fileData.filter(
+            (file) =>
+                file.fileName.toLowerCase().includes(lowerQuery) ||
+                file.description.toLowerCase().includes(lowerQuery) ||
+                file.keywords.some((keyword) => keyword.toLowerCase().includes(lowerQuery))
+        );
+        setFilteredFileData(filteredData);
+        setCurrentSearchQuery(query);
+        setIsSearching(true); // Enable search mode
+        setLoading(false); // Stop loading animation
+    };
 
-    const handleSearch = useCallback(
-        debounce((query) => {
-            setLoading(true);
-            const lowerQuery = query.toLowerCase();
-            const filteredData = fileData.filter(
-                (file) =>
-                    file.fileName.toLowerCase().includes(lowerQuery) ||
-                    file.description.toLowerCase().includes(lowerQuery) ||
-                    file.keywords.some((keyword) => keyword.toLowerCase().includes(lowerQuery))
-            );
-            setFilteredFileData(filteredData);
-            setIsSearching(true);
-            setLoading(false);
-        }, 300), // 300ms debounce delay
-        []
-    );
-
-    const handleKeywordSelect = useCallback(
-        debounce((keyword) => {
-            setLoading(true);
-            const filteredData = fileData.filter((file) => file.keywords.includes(keyword));
-            setFilteredFileData(filteredData);
-            setIsSearching(true);
-            setLoading(false);
-        }, 300),
-        []
-    );
-
-    const handleInputChange = (event) => {
-        const query = event.target.value;
-        setSearchQuery(query);
-        handleSearch(query); // Call the debounced search
+    // Handles keyword selection from the Sidebar
+    const handleKeywordSelect = (keyword) => {
+        setLoading(true); // Start loading animation
+        const filteredData = fileData.filter((file) => file.keywords.includes(keyword));
+        setFilteredFileData(filteredData);
+        setIsSearching(true); // Enable search mode
+        setLoading(false); // Stop loading animation
     };
 
     return (
         <div className="div-home-main">
-            <Sidebar onSearch={handleSearch} onKeywordSelect={handleKeywordSelect} keywords={uniqueKeywords} />
+            {/* Sidebar for search and keyword selection */}
+            <Sidebar
+                onSearch={handleSearch}
+                onKeywordSelect={handleKeywordSelect}
+                keywords={uniqueKeywords}
+            />
+
             <div className="div-home-main-column">
+                {/* Loading animation */}
                 {loading && <div className="loading-spinner">Loading...</div>}
+
+                {/* Top file row */}
                 <TopFileRow
                     onFileSelect={handleFileSelect}
                     selectedFilePath={selectedFilePath}
-                    fileData={isSearching ? filteredFileData : fileData} // Use filtered data only when searching
-                    searchQuery={searchQuery}
+                    fileData={isSearching ? filteredFileData : fileData} // Show filtered data during search
+                    searchQuery={currentSearchQuery}
                 />
 
+                {/* File selector button */}
                 <SelectFileButton onFileProcessed={handleFileProcessed} />
 
-                <FileDetails file={{ selectedFileName, description: extractedText, keywords, links, selectedFilePath, filePdfPath }} />
+                {/* File details */}
+
+                {isSelectedSinglePage ? (
+                    <FileDetails
+                        file={{
+                            selectedFileName,
+                            description: extractedText,
+                            keywords,
+                            links,
+                            selectedFilePath,
+                            filePdfPath,
+                            selectedPageNumber
+                        }}
+                    />
+                ) : (
+                    <FileDetails
+                        file={{
+                            selectedFileName,
+                            description: extractedText,
+                            keywords,
+                            links,
+                            selectedFilePath,
+                            filePdfPath,
+                        }}
+                    />
+                )
+                }
             </div>
         </div>
     );

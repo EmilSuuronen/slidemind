@@ -29,6 +29,7 @@ function TopFileRow({onFileSelect, selectedFilePath, fileData, searchQuery}) {
 
     // Flatten fileData to create an array of individual matching slides
     const matchingSlidesData = slideFileData.flatMap((file) => {
+
         if (file.slides && searchQuery) {
             // Filter slides that match the search query
             return file.slides
@@ -82,7 +83,7 @@ function TopFileRow({onFileSelect, selectedFilePath, fileData, searchQuery}) {
                             <div
                                 key={index}
                                 className={`fileRowItem ${file.filePath === selectedFilePath ? "selected" : ""}`}
-                                onClick={() => onFileSelect(file, true)}
+                                onClick={() => onFileSelect(file, true, file.slideNumber)}
                             >
                                 <Document
                                     file={`file://${file.pdfPath}`}

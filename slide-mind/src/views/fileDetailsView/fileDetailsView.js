@@ -8,8 +8,10 @@ import './fileDetailsViewStyles.css';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@4.4.168/build/pdf.worker.min.mjs`;
 
-function FileDetails({ file }) {
+function FileDetails({ file }, { pageNumber }) {
     const [numPages, setNumPages] = useState(null);
+
+    console.log("filepagenumber", file.selectedPageNumber);
 
     if (!file) {
         return <p style={{ fontStyle: 'italic' }}>No file selected yet</p>;
@@ -66,23 +68,39 @@ function FileDetails({ file }) {
                         </button>
                     </div>
 
-                    <Document
-                        file={`file://${file.filePdfPath}`}
-                        onLoadSuccess={onDocumentLoadSuccess}
-                        className="pdf-document"
-                    >
-                        {Array.from(
-                            new Array(numPages),
-                            (el, index) => (
-                                <Page
-                                    className="pdf-document-page"
-                                    key={`page_${index + 1}`}
-                                    pageNumber={index + 1}
-                                    width="450"
-                                />
-                            )
-                        )}
-                    </Document>
+                    {file.selectedPageNumber ? (
+                        <Document
+                            file={`file://${file.filePdfPath}`}
+                            onLoadSuccess={onDocumentLoadSuccess}
+                            className="pdf-document"
+                        >
+                            <Page
+                                className="pdf-document-page"
+                                key={`page_${file.selectedPageNumber}`}
+                                pageNumber={file.selectedPageNumber}
+                                width="450"
+                            />
+                        </Document>
+                    ) :(
+                        <Document
+                            file={`file://${file.filePdfPath}`}
+                            onLoadSuccess={onDocumentLoadSuccess}
+                            className="pdf-document"
+                        >
+                            {Array.from(
+                                new Array(numPages),
+                                (el, index) => (
+                                    <Page
+                                        className="pdf-document-page"
+                                        key={`page_${index + 1}`}
+                                        pageNumber={index + 1}
+                                        width="450"
+                                    />
+                                )
+                            )}
+                        </Document>
+                    )}
+
                 </div>
             )}
         </div>
