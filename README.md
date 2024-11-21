@@ -8,6 +8,9 @@
 
 Clone the application with ```git clone https://github.com/EmilSuuronen/slidemind```
 
+### Installing libraries: 
+Install required libraries with ```npm install```
+
 ### Additional dependencies: 
 
 The application requires an OpenAi API key to work.
