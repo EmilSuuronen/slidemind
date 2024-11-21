@@ -33,6 +33,7 @@ function FileDetails({file}) {
 
     return (
         <div className="fileDetailsView-main-container">
+            {/*Main divider for info column*/}
             <div className="file-detail-info-column">
                 <h2>{file.selectedFileName}</h2>
                 <h3>Description</h3>
@@ -53,6 +54,7 @@ function FileDetails({file}) {
                 )}
             </div>
 
+            {/*Container for displaying the pdf preview. Conditional on whether single page or document selected*/}
             {file.filePdfPath && (
                 <div className="pdf-document-container">
                     <div className="pdf-view-buttons-container">
