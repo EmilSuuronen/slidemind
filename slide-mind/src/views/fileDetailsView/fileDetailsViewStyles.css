@@ -1,0 +1,66 @@
+.fileDetailsView-main-container {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    justify-content: space-evenly;
+}
+
+.file-detail-info-column {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    height: 100%;
+}
+
+.pdf-document-container {
+    max-height: 500px;
+    overflow-y: scroll;
+}
+
+.pdf-document {
+
+}
+
+.pdf-document-page {
+    margin: 8px 8px 0 8px;
+    pointer-events: none;
+}
+
+.pdf-view-buttons-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background: #282c34;
+    position: sticky;
+    padding: 8px;
+    top: 0;
+    z-index: 1; /* Ensures the buttons stay on top of PDF content */
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+    color: white;
+}
+
+.open-file-button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 4px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 12px;
+    margin: 4px 2px;
+    cursor: pointer;
+    width: 20%;
+}
+
+.show-file-location-button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 4px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 12px;
+    margin: 4px 2px;
+    cursor: pointer;
+    width: 20%;
+}

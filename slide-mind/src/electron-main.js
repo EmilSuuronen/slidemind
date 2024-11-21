@@ -94,7 +94,14 @@ app.whenReady().then(() => {
             // Extract text content from PowerPoint
             const textContent = await extractor.extractText({ input: filePath, type: 'file' });
 
-            return { filePath, fileName, textContent }; // Return all necessary fields
+            // Split textContent into individual slides
+            const slides = textContent.split(/---+/).map((slideContent, index) => ({
+                slideNumber: index + 1,
+                textContent: slideContent.trim()
+            }));
+
+            // Return all necessary fields including slides array
+            return { filePath, fileName, textContent, slides };
         } catch (error) {
             console.error('Error extracting text:', error);
             throw error;
@@ -104,7 +111,7 @@ app.whenReady().then(() => {
     ipcMain.handle('dialog:openFile', async () => {
         const { canceled, filePaths } = await dialog.showOpenDialog({
             properties: ['openFile', 'multiSelections'], // Allow multiple file selection
-            filters: [{ name: 'PowerPoint Files', extensions: ['pptx'] }],
+            filters: [{ name: 'PowerPoint Files', extensions: ['pptx', 'pdf'] }],
         });
 
         return canceled ? null : filePaths;
@@ -140,19 +147,22 @@ app.whenReady().then(() => {
         }
     });
 
+
     ipcMain.handle('convert-pptx-to-pdf', async (event, pptxPath) => {
         const outputDir = path.join(__dirname, 'tempfiles');
         const scriptPath = path.join(__dirname, '/script/pptx_converter.ps1');
 
         return new Promise((resolve, reject) => {
-            exec(`powershell -ExecutionPolicy Bypass -File "${scriptPath}" -pptxPath "${pptxPath}" -outputDir "${outputDir}"`, (error, stdout, stderr) => {
+            exec(
+                `powershell -ExecutionPolicy Bypass -File "${scriptPath}" -pptxPath "${pptxPath}" -outputDir "${outputDir}"`,
+                (error, stdout, stderr) => {
                 if (error) {
                     console.error(`Conversion error: ${stderr}`);
-                    reject({ success: false, error: stderr });
+                    reject({success: false, error: stderr});
                 } else {
                     const pdfFileName = path.basename(pptxPath, '.pptx') + '.pdf';
                     const pdfPath = path.join(outputDir, pdfFileName);
-                    resolve({ success: true, pdfPath });
+                    resolve({success: true, pdfPath});
                 }
             });
         });

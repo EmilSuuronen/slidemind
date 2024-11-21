@@ -1,18 +1,69 @@
 /* src/fileRow/topFileRowStyles.css */
+.top-file-row-main-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    width: 100%;
+
+}
 .topFileRow {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    width: 100%;
     background: #5b5b5b;
+    overflow-x: hidden;
+}
+
+#topRowExpandedtrue {
+    transition: height 0.3s ease-in-out;
+    height: 100%;
+}
+
+#topRowExpandedfalse {
+    transition: height 0.3s ease-in-out;
+    height: 280px;
+}
+
+.top-file-row-file-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 100%;
+}
+
+.top-file-row-file-container-title {
+    width: 100%;
+    padding: 12px;
+    margin: 0px;
+    color: white;
+    background-color: #333333;
 }
 
 .fileRowItem {
-    padding: 8px;
+    flex: auto;
+    max-width: calc(100% / 6);
+    min-width: 200px;
+    height: 120px;
     margin: 12px;
     cursor: pointer;
     border: 1px solid transparent;
     border-radius: 4px;
-    height: 40px;
     background-color: #727272;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+
+.pdf-document-page-top-row {
+    display: flex;
+    pointer-events: none;
+    justify-content: center;
+    max-width: 100px;
 }
 
 .fileRowItem.selected {
@@ -22,6 +73,35 @@
 }
 
 .fileRowItem:hover {
-    margin: 12px;
     background: #9b9b9b;
+}
+
+.extend-top-row {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background: rgba(49, 49, 49, 0.57);
+    position: sticky;
+    width: 100%;
+    z-index: 100;
+    color: white;
+    height: 30px;
+    bottom: 0;
+    box-shadow: #333333 0px 0px 5px 0px;
+}
+
+.extend-top-row:hover {
+    background: rgba(75, 75, 75, 0.57);
+    cursor: pointer;
+}
+
+.div-page-number {
+    background-color: #4CAF50;
+    border-radius: 12px;
+    width: 50%;
+}
+
+.highlight {
+    background-color: yellow;
+    color: red;
 }

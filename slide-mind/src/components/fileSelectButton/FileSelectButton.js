@@ -12,20 +12,30 @@ function SelectFileButton({ onFileProcessed }) {
 
         for (const selectedFilePath of selectedFilePaths) {
             try {
+                console.log('Processing file:', selectedFilePath);
                 const fileExists = await window.electronAPI.checkFileExists(selectedFilePath);
                 if (fileExists) {
                     continue;
                 }
 
+                const isPdf = selectedFilePath.toLowerCase().endsWith('.pdf');
+
                 // Extract text content
-                const { filePath, fileName, textContent } = await window.electronAPI.extractText(selectedFilePath);
+                const { filePath, fileName, textContent, slides } = await window.electronAPI.extractText(selectedFilePath);
 
                 // Generate AI response
                 const formattedResponse = await callOpenAiAPI(textContent);
 
+                let pdfPath = null;
+
                 // Convert PPTX to PDF
-                const pdfResult = await window.electronAPI.convertPptxToPdf(selectedFilePath);
-                const pdfPath = pdfResult.success ? pdfResult.pdfPath : null;
+                if (!isPdf) {
+                    const pdfResult = await window.electronAPI.convertPptxToPdf(selectedFilePath);
+                    pdfPath = pdfResult.success ? pdfResult.pdfPath : null;
+                } else {
+                    console.log('File is already a PDF. Skipping conversion.');
+                    pdfPath = filePath; // Use the original PDF path
+                }
 
                 // Construct the final file object with pdfPath
                 const newFileObject = {
@@ -34,7 +44,9 @@ function SelectFileButton({ onFileProcessed }) {
                     textContent,
                     keywords: formattedResponse.keywords,
                     description: formattedResponse.description,
-                    pdfPath, // Include PDF path
+                    sources: formattedResponse.sources,
+                    pdfPath,
+                    slides
                 };
 
                 // Save the file data to JSON
