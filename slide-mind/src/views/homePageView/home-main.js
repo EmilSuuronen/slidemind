@@ -40,7 +40,6 @@ function HomeMain() {
     // Handles when a file is selected
     const handleFileSelect = (file, isSinglePage, pageNumber, index) => {
 
-
         if (previousSelectedIndexRef.current !== null) {
             const previousItem = document.getElementById(`singleFileRowItem${previousSelectedIndexRef.current}`);
             if (previousItem) {
