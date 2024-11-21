@@ -43,7 +43,7 @@ function HomeMain() {
         if (previousSelectedIndexRef.current !== null) {
             const previousItem = document.getElementById(`singleFileRowItem${previousSelectedIndexRef.current}`);
             if (previousItem) {
-                previousItem.style.border = ''; // Remove the border
+                previousItem.style.border = '';
             }
         }
 
@@ -120,7 +120,7 @@ function HomeMain() {
                 {/* File selector button */}
                 <SelectFileButton onFileProcessed={handleFileProcessed} />
 
-                {/* File details */}
+                {/* File details. Conditional based on whether single page or document selected*/}
 
                 {isSelectedSinglePage ? (
                     <FileDetails
