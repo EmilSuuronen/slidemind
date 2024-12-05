@@ -1,66 +1,56 @@
 .fileDetailsView-main-container {
-    display: flex;
-    height: 100%;
-    width: 100%;
-    justify-content: space-evenly;
+	display: flex;
+	justify-content: space-around;
+	height: 65%;
 }
 
 .file-detail-info-column {
-    display: flex;
-    flex-direction: column;
-    width: 50%;
-    height: 100%;
+	display: flex;
+	flex-direction: column;
+	width: 50%;
+	padding-left: 1em;
+	padding-right: 1em;
 }
 
 .pdf-document-container {
-    max-height: 500px;
-    overflow-y: scroll;
-}
-
-.pdf-document {
-
+	overflow-y: auto;
+	width: 50%;
+	background-color: #f3fafb;
+	padding-left: 1em;
+	padding-right: 1em;
+	min-height: 100%;
 }
 
 .pdf-document-page {
-    margin: 8px 8px 0 8px;
-    pointer-events: none;
+	margin: 8px 8px 0 8px;
+	pointer-events: none;
 }
 
 .pdf-view-buttons-container {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    background: #282c34;
-    position: sticky;
-    padding: 8px;
-    top: 0;
-    z-index: 1; /* Ensures the buttons stay on top of PDF content */
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
-    color: white;
+	display: flex;
+	justify-content: space-evenly;
+	padding-top: 0.5em;
+	padding-bottom: 0.5em;
+	align-items: center;
+	position: sticky;
+	top: 0;
+	background-color: #f3fafb;
+	z-index: 10000; /* Ensures the buttons stay on top of PDF content */
 }
 
-.open-file-button {
-    background-color: #4CAF50;
-    border: none;
-    color: white;
-    padding: 4px;
-    text-align: center;
-    text-decoration: none;
-    font-size: 12px;
-    margin: 4px 2px;
-    cursor: pointer;
-    width: 20%;
+.pdf-button {
+	background-color: #00aaa3;
+	border: none;
+	color: white;
+	padding: 4px;
+	text-align: center;
+	text-decoration: none;
+	font-size: 12px;
+	margin: 4px 2px;
+	cursor: pointer;
+	width: 20%;
 }
 
-.show-file-location-button {
-    background-color: #4CAF50;
-    border: none;
-    color: white;
-    padding: 4px;
-    text-align: center;
-    text-decoration: none;
-    font-size: 12px;
-    margin: 4px 2px;
-    cursor: pointer;
-    width: 20%;
+.pdf-button:hover {
+	background-color: #00847f;
 }
