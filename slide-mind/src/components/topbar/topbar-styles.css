@@ -1,0 +1,70 @@
+.div-topbar-main {
+	display: flex;
+	flex-direction: row;
+	background-color: #f3fafb;
+	color: #00847f;
+	align-items: center;
+	width: 100%;
+	height: 4rem;
+	z-index: 1000;
+	border-bottom: 3px solid #00847f;
+	box-sizing: border-box;
+}
+
+.topbar-menu {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	gap: 2rem;
+	width: 100%;
+	margin: 0 auto;
+}
+
+.search-input-field {
+	width: 100%;
+	max-width: 15.625rem;
+	padding: 0.5rem;
+	border: 0.0625rem solid transparent;
+	background-color: #f3fafb;
+	border-bottom: 2px solid #00847f;
+	color: #00847f;
+}
+
+.search-section,
+.keyword-section {
+	display: flex;
+	align-items: center;
+	gap: 0.625rem;
+	flex: 0 1 auto;
+	max-width: 18.75rem;
+}
+
+h1 {
+	flex: 0 0 auto;
+	padding: 0 3.75rem;
+	color: #00847f;
+}
+
+.spacer {
+	flex: 1;
+}
+
+.button-select-file {
+	background: #00aaa3;
+	border: none;
+	color: white;
+	padding: 0.5rem 1rem;
+	text-align: center;
+	display: inline-block;
+	font-size: 1rem;
+	cursor: pointer;
+	border-radius: 0.25rem;
+	max-width: 15.625rem;
+	height: 2.5rem;
+	margin: 3.75rem;
+}
+
+.button-select-file:hover {
+	background: #00847f;
+}

@@ -1,15 +1,15 @@
 .keyword-span {
-    padding: 10px 15px;
-    background-color: #5c5cff;
-    border-radius: 20px;
-    font-size: 14px;
-    font-weight: bold;
-    color: #333;
-    margin: 5px 0;
+	padding: 10px 15px;
+	background-color: #64c3cd;
+	border-radius: 20px;
+	font-size: 14px;
+	font-weight: bold;
+	color: #333;
+	margin: 5px 0;
 }
 
 .keyword-span:hover {
-    background-color: #7272ff;
-    color: white;
-    cursor: pointer;
+	background-color: #00aaa3;
+	color: white;
+	cursor: pointer;
 }
