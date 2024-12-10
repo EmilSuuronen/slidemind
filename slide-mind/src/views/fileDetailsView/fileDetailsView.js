@@ -85,14 +85,14 @@ function FileDetails({ file }) {
 								file={`file://${file.filePdfPath}`}
 								onLoadSuccess={onDocumentLoadSuccess}
 								className='pdf-document'
-								width='700'
+								width='500'
 							>
 								<Page
 									className='pdf-document-page'
 									key={`page_${file.selectedPageNumber}`}
 									pageNumber={file.selectedPageNumber}
 									renderTextLayer={true}
-									width='700'
+									width='500'
 								/>
 							</Document>
 						</div>
@@ -107,7 +107,7 @@ function FileDetails({ file }) {
 									className='pdf-document-page'
 									key={`page_${index + 1}`}
 									pageNumber={index + 1}
-									scale='0.84'
+									width='500'
 								/>
 							))}
 						</Document>

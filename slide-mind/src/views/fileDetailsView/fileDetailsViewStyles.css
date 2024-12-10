@@ -2,6 +2,7 @@
 	display: flex;
 	justify-content: space-around;
 	height: 65%;
+	background-color: #b8cacc;
 }
 
 .file-detail-info-column {
@@ -13,12 +14,9 @@
 }
 
 .pdf-document-container {
-	overflow-y: auto;
-	width: 50%;
 	background-color: #f3fafb;
-	padding-left: 1em;
-	padding-right: 1em;
-	min-height: 100%;
+	max-width: 50%;
+	overflow-y: scroll;
 }
 
 .pdf-document-page {
@@ -35,7 +33,7 @@
 	position: sticky;
 	top: 0;
 	background-color: #f3fafb;
-	z-index: 10000; /* Ensures the buttons stay on top of PDF content */
+	z-index: 10000;
 }
 
 .pdf-button {

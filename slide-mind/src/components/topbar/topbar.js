@@ -22,12 +22,12 @@ function Topbar({ onSearch, onKeywordSelect, keywords, onFileProcessed }) {
 	const [keywordQuery, setKeywordQuery] = useState('')
 
 	const debouncedOnSearch = useCallback(
-		debounce((query) => onSearch(query), 300),
+		debounce((query) => onSearch(query), 500),
 		[onSearch]
 	)
 
 	const debouncedOnKeywordSelect = useCallback(
-		debounce((keyword) => onKeywordSelect(keyword), 300),
+		debounce((keyword) => onKeywordSelect(keyword), 500),
 		[onKeywordSelect]
 	)
 

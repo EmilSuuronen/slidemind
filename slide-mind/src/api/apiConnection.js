@@ -3,6 +3,7 @@ import axios from "axios";
 
 export const callOpenAiAPI = async (fileContents) => {
     const apiKey =  process.env.REACT_APP_OPENAI_API_KEY;
+    console.log("api key: ", apiKey);
     try {
         const result = await axios.post(
             "https://api.openai.com/v1/chat/completions",
