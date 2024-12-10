@@ -52,18 +52,9 @@ h1 {
 }
 
 .button-select-file {
-	background: #00aaa3;
-	border: none;
-	color: white;
-	padding: 0.5rem 1rem;
-	text-align: center;
-	display: inline-block;
-	font-size: 1rem;
-	cursor: pointer;
-	border-radius: 0.25rem;
-	max-width: 15.625rem;
-	height: 2.5rem;
-	margin: 3.75rem;
+	width: 6rem;
+	margin-right: 16px;
+	border-radius: 4px;
 }
 
 .button-select-file:hover {
