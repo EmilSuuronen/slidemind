@@ -58,10 +58,10 @@ function TopFileRow({ onFileSelect, selectedFilePath, fileData, searchQuery }) {
 									<Page
 										className='pdf-document-page-top-row'
 										pageNumber={1}
-										width='100'
+										width='220'
 									/>
 								</Document>
-								<span className='fileName'>
+								<span className='top-file-fileName'>
 									{truncateFileName(file.fileName)}
 								</span>
 							</div>
@@ -88,6 +88,9 @@ function TopFileRow({ onFileSelect, selectedFilePath, fileData, searchQuery }) {
 									)
 								}
 							>
+								<div className='div-page-number'>
+									Page {file.slideNumber}
+								</div>
 								<Document
 									file={`file://${file.pdfPath}`}
 									className='pdf-document'
@@ -95,14 +98,11 @@ function TopFileRow({ onFileSelect, selectedFilePath, fileData, searchQuery }) {
 									<Page
 										className='pdf-document-page-top-row'
 										pageNumber={file.slideNumber} // Display only the matched slide's page
-										width={100}
+										width='220'
 									/>
 								</Document>
-								<span className='fileName'>
+								<span className='top-file-fileName'>
 									{truncateFileName(file.fileName)} -{' '}
-									<div className='div-page-number'>
-										Page {file.slideNumber}
-									</div>
 								</span>
 							</div>
 						))
