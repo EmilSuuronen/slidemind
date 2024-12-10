@@ -3,7 +3,6 @@ import axios from "axios";
 
 export const callOpenAiAPI = async (fileContents) => {
     const apiKey =  process.env.REACT_APP_OPENAI_API_KEY;
-    console.log("api key: ", apiKey);
     try {
         const result = await axios.post(
             "https://api.openai.com/v1/chat/completions",
@@ -14,15 +13,23 @@ export const callOpenAiAPI = async (fileContents) => {
                         role: "user",
                         content: `Your task is to create the JSON object from the given text content extracted from this PowerPoint file:
                         ${fileContents}
-                        Create short description of the contents. Description should be usable in search functionality and have all the necessary information from the powerpoint.
-                        List maximum of 3 keywords that describe the content in general way. These keywords will be used for a search functionality.
-                        List all links present in the content as an array.
+                        Stay always strict to these rules:
+                        - Create short summary of the contents of the document called description.
+                        - List maximum of 3 keywords describing the content.
+                        - The keywords should not be too unique: use words which can be used in multiple contexts and files and re-use them accordingly.
+                        - List all links present in the content as an array.
+                        - Create a "contentSuggestion" field: small bulleted list of contents if the user were to 
+                        re-use the powerpoint to create a new powerpoint. Use exact references from the text.
+                        - Create analysis of content that might be outdated or incorrect which might require further research called "informationValidity",
+                        - If the language of the extracted text I have given is Finnish your the response should ALWAYS be in Finnish.
 
                         Respond in the following JSON format:
                         {
                             "description": "<summary>",
-                            "keywords": ["keyword1", "keyword2", "keyword3"]
-                            "links": ["link1", "link2", "link3"]
+                            "keywords": ["keyword1", "keyword2", "keyword3"],
+                            "links": ["link1", "link2", "link3"],
+                            "contentSuggestion": "",
+                            "informationValidity": ""
                         }`
                     }
                 ],

@@ -49,7 +49,7 @@ function Topbar({ onSearch, onKeywordSelect, keywords, onFileProcessed }) {
 
 	return (
 		<div className='div-topbar-main'>
-			<h1>Slide Mind</h1>
+			<h1 className="app-logo-h1">Slide Mind</h1>
 			<div className='spacer' />
 			<div className='topbar-menu'>
 				<div className='search-section'>

@@ -31,31 +31,62 @@ function FileDetails({ file }) {
 		setNumPages(numPages)
 	}
 
+	console.log(file)
+
 	return (
 		<div className='fileDetailsView-main-container'>
 			{/*Main divider for info column*/}
 			<div className='file-detail-info-column'>
-				<h2>{file.selectedFileName}</h2>
-				<h3>Description</h3>
-				<p>{file.description || <i>No description available</i>}</p>
+				<div className="div-info-background-box-title">
+					<h2>{file.selectedFileName}</h2>
+					{file.keywords && file.keywords.length > 0 ? (
+						<Keyword keywords={file.keywords} />
+					) : (
+						<p style={{ fontStyle: 'italic' }}>
+							No keywords to display
+						</p>
+					)}
+				</div>
+				<div className="div-info-background-box">
+					<h3>Description</h3>
+					<p>{file.description || <i>No description available</i>}</p>
+				</div>
 
-				{file.keywords && file.keywords.length > 0 ? (
-					<Keyword keywords={file.keywords} />
-				) : (
-					<p style={{ fontStyle: 'italic' }}>
-						No keywords to display
-					</p>
-				)}
+				<div className="div-info-background-box">
+					<h3>Content suggestions</h3>
+					{file.contentSuggestions ? (
+						<p>{file.contentSuggestions}</p>
+					) : (
+						<p style={{ fontStyle: 'italic' }}>
+							Information up to date
+						</p>
+					)}
+				</div>
 
-				<h3>Sources</h3>
+				<div className="div-info-background-box">
+					<h3>Information validity</h3>
+					{file.informationValidity.length > 0 ? (
+						<p>{file.informationValidity}</p>
+					) : (
+						<p style={{ fontStyle: 'italic' }}>
+							Information up to date
+						</p>
+					)}
+				</div>
 
-				{file.links && file.links.length > 0 ? (
-					<Keyword keywords={file.links} />
-				) : (
-					<p style={{ fontStyle: 'italic' }}>
-						No sources in material
-					</p>
-				)}
+
+				<div className="div-info-background-box">
+					<h3>Sources</h3>
+
+					{file.links && file.links.length > 0 ? (
+						<p>{file.links}</p>
+					) : (
+						<p style={{ fontStyle: 'italic' }}>
+							No sources in material
+						</p>
+					)}
+				</div>
+
 			</div>
 
 			{/*Container for displaying the pdf preview. Conditional on whether single page or document selected*/}

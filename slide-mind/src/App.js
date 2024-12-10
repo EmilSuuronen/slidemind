@@ -19,6 +19,8 @@ function App() {
     const [isSelectedSinglePage, setIsSelectedSinglePage] = useState(false)
     const [selectedPageNumber, setSelectedPageNumber] = useState(null)
     const previousSelectedIndexRef = useRef(null)
+    const [contentSuggestions, setContentSuqggestions] = useState("No content suggestions available.")
+    const [informationValidity, setInformationValidity] = useState("Information seems to be up to date.")
 
     const uniqueKeywords = [
         ...new Set(fileData.flatMap((file) => file.keywords)),
@@ -32,11 +34,15 @@ function App() {
         setSelectedFileName(newFile.fileName)
         setExtractedText(newFile.description)
         setKeywords(newFile.keywords)
-        setLinks(newFile.links)
+        setLinks(newFile.sources)
         setFilePdfPath(newFile.pdfPath)
+        setContentSuqggestions(newFile.contentSuggestion)
+        setInformationValidity(newFile.informationValidity)
+        console.log("newFile: ", newFile)
     }
 
     const handleFileSelect = (file, isSinglePage, pageNumber, index) => {
+        console.log("filefajewifjewoiafejawio", file)
         if (previousSelectedIndexRef.current !== null) {
             const previousItem = document.getElementById(
                 `singleFileRowItem${previousSelectedIndexRef.current}`
@@ -64,8 +70,10 @@ function App() {
         setSelectedFileName(file.fileName)
         setExtractedText(file.description)
         setKeywords(file.keywords)
-        setLinks(file.links)
+        setLinks(file.sources)
         setFilePdfPath(file.pdfPath)
+        setContentSuqggestions(file.contentSuggestion)
+        setInformationValidity(file.informationValidity)
     }
 
     const handleSearch = (query) => {
@@ -126,6 +134,8 @@ function App() {
                             filePdfPath,
                             selectedPageNumber,
                             currentSearchQuery,
+                            contentSuggestions,
+                            informationValidity,
                         }}
                     />
                 ) : (
@@ -137,6 +147,10 @@ function App() {
                             links,
                             selectedFilePath,
                             filePdfPath,
+                            selectedPageNumber,
+                            currentSearchQuery,
+                            contentSuggestions,
+                            informationValidity,
                         }}
                     />
                 )}

@@ -44,7 +44,9 @@ function SelectFileButton({ onFileProcessed }) {
                     textContent,
                     keywords: formattedResponse.keywords,
                     description: formattedResponse.description,
-                    sources: formattedResponse.sources,
+                    sources: formattedResponse.links,
+                    contentSuggestion: formattedResponse.contentSuggestion,
+                    informationValidity: formattedResponse.informationValidity,
                     pdfPath,
                     slides
                 };
