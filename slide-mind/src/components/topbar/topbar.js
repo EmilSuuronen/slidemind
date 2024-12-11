@@ -22,12 +22,12 @@ function Topbar({ onSearch, onKeywordSelect, keywords, onFileProcessed }) {
 	const [keywordQuery, setKeywordQuery] = useState('')
 
 	const debouncedOnSearch = useCallback(
-		debounce((query) => onSearch(query), 300),
+		debounce((query) => onSearch(query), 500),
 		[onSearch]
 	)
 
 	const debouncedOnKeywordSelect = useCallback(
-		debounce((keyword) => onKeywordSelect(keyword), 300),
+		debounce((keyword) => onKeywordSelect(keyword), 500),
 		[onKeywordSelect]
 	)
 
@@ -49,7 +49,7 @@ function Topbar({ onSearch, onKeywordSelect, keywords, onFileProcessed }) {
 
 	return (
 		<div className='div-topbar-main'>
-			<h1>Slide Mind</h1>
+			<h1 className="app-logo-h1">Slide Mind</h1>
 			<div className='spacer' />
 			<div className='topbar-menu'>
 				<div className='search-section'>
