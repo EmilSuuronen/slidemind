@@ -1,8 +1,22 @@
-# slidemind
+# SlideMind
 
 ## About the application
 
-## Getting started
+SlideMind is an application for searching and viewing your presentation files and analyzing them easily with AI generated information to help with organizing your clutter.
+
+## Technologies and features
+- Desktop application built using Electron
+- React frontend
+- OpenAI API for AI analysis of files
+- Manage your files to save your data locally
+- Automatically generated descriptions, content validity information and content suggestion with AI.
+- Search, open and find your files
+- View documents directly inside the application
+- Support for .ppt, .pptx and .pdf files
+
+## Download SlideMind and documentation from https://emilsuuronen.github.io/slidemind-home/
+
+## Using the application source code
 
 Clone the application with `git clone https://github.com/EmilSuuronen/slidemind`
 
