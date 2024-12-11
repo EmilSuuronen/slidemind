@@ -4,6 +4,7 @@
 
 SlideMind is an application for searching and viewing your presentation files and analyzing them easily with AI generated information to help with organizing your clutter.
 
+![alt text](https://github.com/EmilSuuronen/slidemind/blob/main/res/Screenshot%202024-12-11%20160733.png?raw=true)
 ## Technologies and features
 - Desktop application built using Electron
 - React frontend
