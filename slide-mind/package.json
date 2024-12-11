@@ -4,7 +4,7 @@
   "private": true,
   "electron": "electron .",
   "dist": "electron-builder",
-  "main": "src/electron-main.js",
+  "main": "src/electron.js",
   "dependencies": {
     "@react-pdf-viewer/core": "^3.12.0",
     "@react-pdf/renderer": "^4.0.0",
@@ -50,7 +50,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "electron": "electron ."
+    "electron": "electron .",
+    "dist": "electron-builder"
   },
   "eslintConfig": {
     "extends": [
@@ -76,5 +77,25 @@
     "electron": "^32.1.2",
     "electron-builder": "^25.0.5",
     "electron-is-dev": "^3.0.1"
-  }
+  },
+  "files": [
+    "build/**/*",
+    "public/electron.js",
+    "public/preload.mjs",
+    "public/localData.json",
+    "public/script/pptx_converter.ps1",
+    "public/tempfiles"
+  ],
+  "win": {
+    "target": "nsis",
+    "icon": "build/favicon.ico"
+  },
+  "nsis": {
+    "oneClick": false,
+    "perMachine": true,
+    "allowToChangeInstallationDirectory": true
+  },
+  "description": "Application for managing and viewing PowerPoint files.",
+  "author": "SlideMinds",
+  "homepage": "./"
 }

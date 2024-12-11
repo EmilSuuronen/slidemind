@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import { callOpenAiAPI } from '../../api/apiConnection.js';
 import './fileSelectButtonStyles.css';
 
+
+
 function SelectFileButton({ onFileProcessed }) {
     const [modalOpen, setModalOpen] = useState(false);
     const [selectedFiles, setSelectedFiles] = useState([]);

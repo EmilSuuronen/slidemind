@@ -6,7 +6,10 @@ import 'react-pdf/dist/Page/TextLayer.css'
 import Keyword from '../../components/keyword/keyword.js'
 import './fileDetailsViewStyles.css'
 
+const __dirname = window.location.pathname.replace(/\/[^/]*$/, '');
+
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@4.4.168/build/pdf.worker.min.mjs`
+//pdfjs.GlobalWorkerOptions.workerSrc = `file://${__dirname}/static/js/pdf.worker.min.mjs`
 
 function FileDetails({ file }) {
 	const [numPages, setNumPages] = useState(null)

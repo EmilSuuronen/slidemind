@@ -41,7 +41,9 @@ const createWindow = () => {
     mainWindow = new BrowserWindow({
         width: 800,
         height: 600,
+        frame: false,
         webPreferences: {
+            frame: false,
             preload: path.join(__dirname, 'preload.js'),
             nodeIntegration: false,
             contextIsolation: true,
@@ -59,6 +61,19 @@ app.whenReady().then(() => {
 
     server.listen(3001, () => {
         console.log('Local file server running on http://localhost:3001');
+    });
+
+    ipcMain.handle('window:minimize', () => {
+        mainWindow.minimize();
+    });
+
+    ipcMain.handle('window:close', () => {
+        mainWindow.close();
+    });
+
+    ipcMain.handle('window:toggle-fullscreen', () => {
+        const isFullscreen = mainWindow.isFullScreen();
+        mainWindow.setFullScreen(!isFullscreen);
     });
 
     ipcMain.handle('check-file-exists', (event, filePath) => {

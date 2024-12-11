@@ -9,7 +9,7 @@
 	z-index: 1000;
 	border-bottom: 3px solid #00847f;
 	box-sizing: border-box;
-	box-shadow: 0 0 10px 0 rgba(0,0,0,0.75);
+	box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.5);
 }
 
 .topbar-menu {

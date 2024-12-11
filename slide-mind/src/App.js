@@ -4,6 +4,7 @@ import TopFileRow from './components/fileRow/TopFileRow.js'
 import Topbar from './components/topbar/topbar.js'
 import fileData from './localData.json'
 import FileDetails from './views/fileDetailsView/fileDetailsView.js'
+import CustomFrame from "./components/customFrame/customFrame.js";
 
 function App() {
     const [selectedFilePath, setSelectedFilePath] = useState(null)
@@ -105,6 +106,7 @@ function App() {
 
     return (
         <div className='div-home-main'>
+            <CustomFrame frameColor="#00847f" />
 
             <Topbar
                 onSearch={handleSearch}
